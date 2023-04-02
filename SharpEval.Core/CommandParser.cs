@@ -2,6 +2,9 @@
 
 namespace SharpEval.Core
 {
+    /// <summary>
+    /// The main expression command parser
+    /// </summary>
     public sealed class CommandParser : ISettingsProvider
     {
         private readonly ICommandReader _commandReader;
@@ -11,10 +14,20 @@ namespace SharpEval.Core
 
         private bool _exitFlag;
 
+        /// <summary>
+        /// Current settings
+        /// </summary>
         public Settings Settings { get; private set; }
 
         Settings ISettingsProvider.GetSettings() => Settings;
 
+        /// <summary>
+        /// Creates a new instance of Command parser
+        /// </summary>
+        /// <param name="commandReader">Command reader abstraction</param>
+        /// <param name="resultWrtiter">Result writer abstraction</param>
+        /// <seealso cref="ICommandReader"/>
+        /// <seealso cref="IResultWrtiter"/>
         public CommandParser(ICommandReader commandReader, IResultWrtiter resultWrtiter)
         {
             Settings = new Settings();
@@ -45,6 +58,11 @@ namespace SharpEval.Core
             }
         }
 
+        /// <summary>
+        /// Main entry point for command parsing
+        /// </summary>
+        /// <param name="cancellationToken">Propagates notification that operations should be canceled.</param>
+        /// <returns>An asyncronous task that can be awaited</returns>
         public async Task RunAsync(CancellationToken cancellationToken = default)
         {
             foreach (var input in _commandReader.InputLines)

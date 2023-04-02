@@ -3,6 +3,9 @@ using System.Numerics;
 
 namespace SharpEval.Core.Maths
 {
+    /// <summary>
+    /// Represents a fractional number
+    /// </summary>
     public struct Fraction :
         IEquatable<Fraction>,
         IComparable<Fraction>,
@@ -17,7 +20,15 @@ namespace SharpEval.Core.Maths
         IAdditiveIdentity<Fraction, Fraction>,
         IMultiplicativeIdentity<Fraction, Fraction>
     {
+
+        /// <summary>
+        /// The number above the line in a vulgar fraction showing how many of the parts indicated by the denominator are taken
+        /// </summary>
         public long Numerator { get; private set; }
+
+        /// <summary>
+        /// The bottom number in a fraction that shows the number of equal parts an item is divided into.
+        /// </summary>
         public long Denominator { get; private set; }
 
         /// <inheritdoc/>
@@ -26,12 +37,20 @@ namespace SharpEval.Core.Maths
         /// <inheritdoc/>
         public static Fraction MultiplicativeIdentity => new(1, 1);
 
+        /// <summary>
+        /// Creates a new instance a fractional number
+        /// </summary>
         public Fraction()
         {
             Numerator = 0;
             Denominator = 1;
         }
-
+        /// <summary>
+        /// Creates a new instance a fractional number
+        /// </summary>
+        /// <param name="numerator">the numerator</param>
+        /// <param name="denominator">the denominator</param>
+        /// <exception cref="DivideByZeroException">when the denominator is 0</exception>
         public Fraction(long numerator, long denominator)
         {
             if (denominator == 0)

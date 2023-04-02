@@ -73,8 +73,32 @@ public sealed class Globals
     /// <param name="number">A number whose logarithm is to be found.</param>
     /// <returns>the base 10 logarithm of the number</returns>
     public static double Log10(double number) => Math.Log10(number);
+
+    /// <summary>
+    /// Returns a specified number raised to the specified power.
+    /// </summary>
+    /// <param name="number">A double-precision floating-point number to be raised to a power</param>
+    /// <param name="power">A double-precision floating-point number that specifies a power</param>
+    /// <returns>The number raised to the power</returns>
     public static double Pow(double number, double power) => Math.Pow(number, power);
+
+    /// <summary>
+    /// Returns an integer that indicates the sign of a double-precision floating-point number.
+    /// </summary>
+    /// <param name="number">A signed number.</param>
+    /// <returns>
+    /// A number that indicates the sign of value.
+    /// -1 –value is less than zero.
+    /// 0 –value is equal to zero.
+    /// 1 –value is greater than zero.
+    /// </returns>
     public static double Sign(double number) => Math.Sign(number);
+
+    /// <summary>
+    /// Returns the square root of a specified number
+    /// </summary>
+    /// <param name="number">The number whose square root is to be found</param>
+    /// <returns>The square root of a specified number</returns>
     public static double Sqrt(double number) => Math.Sqrt(number);
 
     public long Factorial(byte number) 
