@@ -20,7 +20,10 @@ namespace SharpEval.Core.Maths
         public long Numerator { get; private set; }
         public long Denominator { get; private set; }
 
+        /// <inheritdoc/>
         public static Fraction AdditiveIdentity => new(0, 1);
+        
+        /// <inheritdoc/>
         public static Fraction MultiplicativeIdentity => new(1, 1);
 
         public Fraction()
@@ -52,6 +55,7 @@ namespace SharpEval.Core.Maths
             Denominator /= gcd;
         }
 
+        /// <inheritdoc/>
         public override string ToString()
         {
             if (Denominator == 1)
@@ -60,22 +64,26 @@ namespace SharpEval.Core.Maths
             return $"{Numerator}/{Denominator}";
         }
 
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             return obj is Fraction fraction && Equals(fraction);
         }
 
+        /// <inheritdoc/>
         public bool Equals(Fraction other)
         {
             return Numerator == other.Numerator &&
                    Denominator == other.Denominator;
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             return HashCode.Combine(Numerator, Denominator);
         }
 
+        /// <inheritdoc/>
         public int CompareTo(Fraction other)
         {
             long n1 = Numerator * other.Denominator;
@@ -83,6 +91,7 @@ namespace SharpEval.Core.Maths
             return n1.CompareTo(n2);
         }
 
+        /// <inheritdoc/>
         public static Fraction Parse(string s, IFormatProvider? provider)
         {
             try
@@ -104,6 +113,7 @@ namespace SharpEval.Core.Maths
             }
         }
 
+        /// <inheritdoc/>
         public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out Fraction result)
         {
             try
@@ -125,16 +135,19 @@ namespace SharpEval.Core.Maths
 
         }
 
+        /// <inheritdoc/>
         public static bool operator ==(Fraction left, Fraction right)
         {
             return left.Equals(right);
         }
 
+        /// <inheritdoc/>
         public static bool operator !=(Fraction left, Fraction right)
         {
             return !(left == right);
         }
 
+        /// <inheritdoc/>
         public static Fraction operator +(Fraction left, Fraction right)
         {
             long lcm = GeneralMath.Lcm(left.Denominator, right.Denominator);
@@ -144,6 +157,7 @@ namespace SharpEval.Core.Maths
             return new Fraction(numerator, lcm);
         }
 
+        /// <inheritdoc/>
         public static Fraction operator -(Fraction left, Fraction right)
         {
             long lcm = GeneralMath.Lcm(left.Denominator, right.Denominator);
@@ -153,6 +167,7 @@ namespace SharpEval.Core.Maths
             return new Fraction(numerator, lcm);
         }
 
+        /// <inheritdoc/>
         public static Fraction operator /(Fraction left, Fraction right)
         {
             long numerator = left.Numerator * right.Denominator;
@@ -160,13 +175,15 @@ namespace SharpEval.Core.Maths
             return new Fraction(numerator, denominator);
         }
 
+        /// <inheritdoc/>
         public static Fraction operator *(Fraction left, Fraction right)
         {
             long numerator = left.Numerator * right.Numerator;
             long denominator = left.Denominator * right.Denominator;
             return new Fraction(numerator, denominator);
         }
- 
+
+        /// <inheritdoc/>
         public static Fraction operator %(Fraction left, Fraction right)
         {
             long quotient = left.Numerator * right.Denominator / left.Denominator;
@@ -174,21 +191,25 @@ namespace SharpEval.Core.Maths
             return left - integerPart * right;
         }
 
+        /// <inheritdoc/>
         public static bool operator <(Fraction left, Fraction right)
         {
             return left.CompareTo(right) < 0;
         }
 
+        /// <inheritdoc/>
         public static bool operator <=(Fraction left, Fraction right)
         {
             return left.CompareTo(right) <= 0;
         }
 
+        /// <inheritdoc/>
         public static bool operator >(Fraction left, Fraction right)
         {
             return left.CompareTo(right) > 0;
         }
 
+        /// <inheritdoc/>
         public static bool operator >=(Fraction left, Fraction right)
         {
             return left.CompareTo(right) >= 0;
