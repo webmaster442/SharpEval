@@ -33,11 +33,6 @@ public sealed class Globals
     /// <returns> A double-precision floating-point number, x, such that 0 ≤ x ≤ Double.MaxValue.</returns>
     public static double Abs(double number) => Math.Abs(number);
 
-    public static T Reciproc<T>(T number) where T : IDivisionOperators<T, T, T>, IMultiplicativeIdentity<T, T>
-    {
-        return T.MultiplicativeIdentity / number;
-    }
-
     /// <summary>
     /// Returns the smallest integral value that is greater than or equal to the specified double-precision floating-point number.
     /// </summary>
@@ -101,47 +96,144 @@ public sealed class Globals
     /// <returns>The square root of a specified number</returns>
     public static double Sqrt(double number) => Math.Sqrt(number);
 
+    /// <summary>
+    /// Returns the factorial of a number.
+    /// </summary>
+    /// <param name="number">The number whose factorial is to be found</param>
+    /// <returns>The factorial of the number.</returns>
     public long Factorial(byte number) 
         => GeneralMath.Factorial(number);
 
+    /// <summary>
+    /// Apply an Si Prefix to a number
+    /// </summary>
+    /// <param name="number">A number</param>
+    /// <param name="prefix">Prefix to apply</param>
+    /// <returns>The Si pefixed number</returns>
+    /// <seealso cref="Si"/>
     public double Prefix(double number, Si prefix)
         => GeneralMath.Prefix(number, prefix);
 
+    /// <summary>
+    /// Returns the sine of the specified angle.
+    /// </summary>
+    /// <param name="number">An angle, measured in the current angle system</param>
+    /// <returns>the sine of the specified angle.</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double Sin(double number)
         => Trigonometry.Sin(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Returns the cosine of the specified angle.
+    /// </summary>
+    /// <param name="number">An angle, measured in the current angle system</param>
+    /// <returns>the cosine of the specified angle.</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double Cos(double number)
         => Trigonometry.Cos(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Returns the tangent of the specified angle.
+    /// </summary>
+    /// <param name="number">An angle, measured in the current angle system</param>
+    /// <returns>the tangent of the specified angle.</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double Tan(double number)
         => Trigonometry.Tan(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Returns the angle whose sine is the specified number.
+    /// </summary>
+    /// <param name="number">A number representing a sine</param>
+    /// <returns>An angle, measured in the current angle system</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double ArcSin(double number)
     => Trigonometry.ArcSin(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Returns the angle whose cosine is the specified number.
+    /// </summary>
+    /// <param name="number">A number representing a cosine</param>
+    /// <returns>An angle, measured in the current angle system</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double ArcCos(double number)
         => Trigonometry.ArcCos(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Returns the angle whose tangent is the specified number.
+    /// </summary>
+    /// <param name="number">A number representing a tangent</param>
+    /// <returns>An angle, measured in the current angle system</returns>
+    /// <seealso cref="Settings"/>
+    /// <seealso cref="AngleSystem"/>
     public double ArcTan(double number)
         => Trigonometry.ArcTan(number, _settingsProvider.GetSettings().CurrentAngleSystem);
 
+    /// <summary>
+    /// Re-maps a number from one range to another. That is, a value of fromLow would get mapped to toLow, a value of fromHigh to toHigh, values in-between to values in-between, etc.
+    /// </summary>
+    /// <param name="value">the number to map.</param>
+    /// <param name="fromLow">the lower bound of the value’s current range.</param>
+    /// <param name="fromHigh">the upper bound of the value’s current range.</param>
+    /// <param name="toLow">the lower bound of the value’s target range.</param>
+    /// <param name="toHigh">the upper bound of the value’s target range.</param>
+    /// <returns>The mapped double value.</returns>
     public static double Map(double value, double fromLow, double fromHigh, double toLow, double toHigh)
         => GeneralMath.Map(value, fromLow, fromHigh, toLow, toHigh);
 
+    /// <summary>
+    /// Re-maps a number from one range to another. That is, a value of fromLow would get mapped to toLow, a value of fromHigh to toHigh, values in-between to values in-between, etc.
+    /// </summary>
+    /// <param name="value">the number to map.</param>
+    /// <param name="fromLow">the lower bound of the value’s current range.</param>
+    /// <param name="fromHigh">the upper bound of the value’s current range.</param>
+    /// <param name="toLow">the lower bound of the value’s target range.</param>
+    /// <param name="toHigh">the upper bound of the value’s target range.</param>
+    /// <returns>The mapped long value.</returns>
     public static long Map(long value, long fromLow, long fromHigh, long toLow, long toHigh)
         => GeneralMath.Map(value, fromLow, fromHigh, toLow, toHigh);
 
+    /// <summary>
+    /// Linear interpolate between two values
+    /// </summary>
+    /// <param name="x0">Starting value</param>
+    /// <param name="x1">End value</param>
+    /// <param name="alpha">interpolation amount</param>
+    /// <returns>A value between x0 and x1</returns>
     public static double Lerp(double x0, double x1, double alpha)
         => GeneralMath.Lerp(x0, x1, alpha);
 
+    /// <summary>
+    /// Returns the greatest common divisor of two numbers
+    /// </summary>
+    /// <param name="a">a number</param>
+    /// <param name="b">a number</param>
+    /// <returns>The greatest common divisor of the two inputs</returns>
     public static long Gcd(long a, long b)
         => GeneralMath.Gcd(a, b);
 
+    /// <summary>
+    /// Returns the least common multiple of two numbers
+    /// </summary>
+    /// <param name="a">a number</param>
+    /// <param name="b">a number</param>
+    /// <returns>The least common multiple of the two inputs</returns>
     public static long Lcm(long a, long b)
         => GeneralMath.Lcm(a, b);
 
-    public static Fraction Fraction(long a, long b)
-        => new(a, b);
+    /// <summary>
+    /// Creates a new Fractional number
+    /// </summary>
+    /// <param name="numerator">the numerator</param>
+    /// <param name="denominator">the denominator</param>
+    /// <returns>A fractional number</returns>
+    public static Fraction Fraction(long numerator, long denominator)
+        => new(numerator, denominator);
 
     /// <summary>
     /// Converts a long value to its binary representation
