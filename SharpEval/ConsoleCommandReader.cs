@@ -1,17 +1,16 @@
-﻿using System.Text;
+﻿using PrettyPrompt;
 
 using SharpEval.Core;
-
-using Spectre.Console;
 
 namespace SharpEval
 {
     internal sealed class ConsoleCommandReader : ICommandReader, IDisposable
     {
-        private readonly StringBuilder _lineBuffer;
-        private bool _exitRequest;
+        private readonly Prompt _prompt;
+        private readonly PromptConfiguration _configuration;
         private readonly CancellationTokenSource _tokenSource;
         private bool _disposed = false;
+
 
         public CancellationToken CancellationToken => _tokenSource.Token;
 
@@ -19,27 +18,26 @@ namespace SharpEval
 
         public ConsoleCommandReader()
         {
-            _lineBuffer = new StringBuilder(200);
             Console.CancelKeyPress += OnExitRequest;
             _tokenSource = new CancellationTokenSource();
+            _configuration = new PromptConfiguration();
+            _prompt = new Prompt(null, new PropmptCallbacks(), null, _configuration);
         }
 
         private void OnExitRequest(object? sender, ConsoleCancelEventArgs e)
         {
-            _exitRequest = true;
             _tokenSource.Cancel();
         }
 
-        private bool TryReadLine(out string line)
+        private async Task<(bool result, string line)> TryReadLine()
         {
-            string? read = Console.ReadLine();
-            if (read != null)
+            _configuration.Prompt = PromptFunction?.Invoke() ?? string.Empty;
+            var result = await _prompt.ReadLineAsync();
+            if (result.IsSuccess)
             {
-                line = read;
-                return true;
+                return (true, result.Text);
             }
-            line = string.Empty;
-            return false;
+            return (false, string.Empty);
         }
 
         public void Dispose()
@@ -57,12 +55,15 @@ namespace SharpEval
             {
                 while (true)
                 {
-                    string prompt = PromptFunction?.Invoke() ?? string.Empty;
-                    AnsiConsole.Write(prompt);
-                    if (TryReadLine(out string line))
-                        yield return line;
+                    var read = TryReadLine().GetAwaiter().GetResult();
+                    if (read.result)
+                    {
+                        yield return read.line;
+                    }
                     else
+                    {
                         yield break;
+                    }
                 }
             }
         }

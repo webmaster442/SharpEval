@@ -292,4 +292,15 @@ public sealed class Globals
     /// <seealso cref="DataSet{T}(T[])"/>
     public static DataSet<T> DataSet<T>(params T[] numbers) where T : INumber<T> 
         => new DataSet<T>(numbers);
+
+    /// <summary>
+    /// Computes the reciprocal of a value.
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="number">The numer</param>
+    /// <returns>the reciprocal of the number</returns>
+    public static T Reciprocal<T>(T number) where T  : IDivisionOperators<T, T, T>, IMultiplicativeIdentity<T, T>
+    {
+        return T.MultiplicativeIdentity / number;
+    }
 }

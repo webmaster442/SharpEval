@@ -133,6 +133,15 @@ namespace SharpEval.Core.Maths
             }
         }
 
+        /// <summary>
+        /// Returns distinct elements from this DataSet as a new DataSet
+        /// </summary>
+        /// <returns>A DataSet, containing only Distinct elements</returns>
+        public DataSet<T> Distinct()
+        {
+            return new DataSet<T>(_data.Distinct().ToArray());
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _data.GetEnumerator();
