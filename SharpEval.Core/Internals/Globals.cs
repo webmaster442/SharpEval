@@ -284,6 +284,17 @@ public sealed class Globals
         => Convert.ToInt64(number, 16);
 
     /// <summary>
+    /// Creates a complex number
+    /// </summary>
+    /// <param name="real">real part</param>
+    /// <param name="imaginary">imaginary part</param>
+    /// <returns>A complex number</returns>
+    public static Complex Complex(double real, double imaginary)
+    {
+        return new Complex(real, imaginary);
+    }
+
+    /// <summary>
     /// Computes the reciprocal of a value.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
