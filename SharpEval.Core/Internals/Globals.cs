@@ -284,23 +284,72 @@ public sealed class Globals
         => Convert.ToInt64(number, 16);
 
     /// <summary>
-    /// Create a DataSet from numbers
-    /// </summary>
-    /// <typeparam name="T">number type</typeparam>
-    /// <param name="numbers">Numbers</param>
-    /// <returns>A DataSet</returns>
-    /// <seealso cref="DataSet{T}(T[])"/>
-    public static DataSet<T> DataSet<T>(params T[] numbers) where T : INumber<T> 
-        => new DataSet<T>(numbers);
-
-    /// <summary>
     /// Computes the reciprocal of a value.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
     /// <param name="number">The numer</param>
     /// <returns>the reciprocal of the number</returns>
-    public static T Reciprocal<T>(T number) where T  : IDivisionOperators<T, T, T>, IMultiplicativeIdentity<T, T>
+    public static T Reciprocal<T>(T number) where T : IDivisionOperators<T, T, T>, IMultiplicativeIdentity<T, T>
     {
         return T.MultiplicativeIdentity / number;
     }
+
+    /// <summary>
+    /// Computes the sum of a sequence numbers
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>The sum of the numbers</returns>
+    public static T Sum<T>(params T[] items) where T : INumber<T>
+        => Stat.Sum(items);
+
+    /// <summary>
+    /// Gets the maximum number from a sequence numbers
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>The maximum of the numbers</returns>
+    public static T Max<T>(params T[] items) where T : INumber<T>
+        => Stat.Max(items);
+
+    /// <summary>
+    /// Gets the Minimum number from a sequence numbers
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>The minimum of the numbers</returns>
+    public static T Min<T>(params T[] items) where T : INumber<T>
+        => Stat.Min(items);
+
+    /// <summary>
+    /// Returns the number of elements in a sequence
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>Number of items</returns>
+    public static int Count<T>(params T[] items)
+    {
+        return items.Length;
+    }
+
+    /// <summary>
+    /// Computes the average of a sequence numbers
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>the average of a sequence numbers</returns>
+    public static double Average<T>(params T[] items) where T : INumber<T>
+        => Stat.Average(items);
+
+    /// <summary>
+    /// Computes the range of a sequence numbers.
+    /// The range is the spread of the elements from the lowest to the highest value 
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>the range of a sequence numbers</returns>
+    public static T Range<T>(params T[] items) where T : INumber<T>
+        => Max(items) - Min(items);
+
+
 }
