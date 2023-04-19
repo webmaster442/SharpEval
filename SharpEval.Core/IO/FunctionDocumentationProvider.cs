@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
 
-using Namotion.Reflection;
-
 using SharpEval.Core.Internals;
 
 namespace SharpEval.Core.IO
@@ -16,7 +14,6 @@ namespace SharpEval.Core.IO
         /// </summary>
         public Dictionary<string, List<string>> Documentation { get; }
         
-        private readonly XmlDocsOptions _options;
         private readonly HashSet<string> _ignoreNames;
 
         /// <summary>
@@ -24,16 +21,15 @@ namespace SharpEval.Core.IO
         /// </summary>
         public FunctionDocumentationProvider()
         {
+            var fileName = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, ".xml");
+            var xmlContent = File.ReadAllText(fileName);
+            XmlDocumenter.LoadXmlDocumentation(xmlContent);
+
             _ignoreNames = new HashSet<string>
             {
                 "ToString", "GetHashCode", "Equals", "GetType"
             };
             Documentation = new Dictionary<string, List<string>>();
-            _options = new XmlDocsOptions
-            {
-                FormattingMode = XmlDocsFormattingMode.None,
-            };
-
             var members = typeof(Globals).GetMembers();
             Fill(members);
         }
@@ -57,16 +53,17 @@ namespace SharpEval.Core.IO
                     continue;
 
                 var key = FixName(member.Name);
-                var content = member.GetXmlDocsSummary(_options);
+
+                var doc = member.GetDocumentation();
+
                 if (Documentation.TryGetValue(key, out List<string>? value))
                 {
-                    value.Add(content);
+                    value.Add(doc);
                 }
                 else
                 {
-                    Documentation.Add(key, new List<string> { content });
+                    Documentation.Add(key, new List<string> { doc });
                 }
-
             }
         }
     }
