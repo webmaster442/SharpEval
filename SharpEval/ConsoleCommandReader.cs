@@ -16,12 +16,12 @@ namespace SharpEval
 
         public Func<string>? PromptFunction { get; set; }
 
-        public ConsoleCommandReader()
+        public ConsoleCommandReader(IDictionary<string, List<string>> documentation)
         {
             Console.CancelKeyPress += OnExitRequest;
             _tokenSource = new CancellationTokenSource();
             _configuration = new PromptConfiguration();
-            _prompt = new Prompt(null, new PropmptCallbacks(), null, _configuration);
+            _prompt = new Prompt(null, new PropmptCallbacks(documentation), null, _configuration);
         }
 
         private void OnExitRequest(object? sender, ConsoleCancelEventArgs e)

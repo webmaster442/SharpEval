@@ -1,7 +1,10 @@
 ﻿using SharpEval;
 using SharpEval.Core;
+using SharpEval.Core.IO;
 
-using var reader = new ConsoleCommandReader();
+var docProvider = new FunctionDocumentationProvider();
+
+using var reader = new ConsoleCommandReader(docProvider.Documentation);
 var writer = new ConsoleResultWriter();
 
 CommandParser parser = new CommandParser(reader, writer);
