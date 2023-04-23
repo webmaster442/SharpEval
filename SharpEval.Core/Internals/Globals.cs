@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Globalization;
+using System.Numerics;
 
 using SharpEval.Core.Maths;
 
@@ -10,10 +11,12 @@ namespace SharpEval.Core.Internals;
 public sealed class Globals
 {
     private readonly ISettingsProvider _settingsProvider;
+    private readonly UnitConversion _unitConversion;
 
     internal Globals(ISettingsProvider settingsProvider)
     {
         _settingsProvider = settingsProvider;
+        _unitConversion = new UnitConversion(CultureInfo.InvariantCulture);
     }
 
     /// <summary>
@@ -101,7 +104,7 @@ public sealed class Globals
     /// </summary>
     /// <param name="number">The number whose factorial is to be found</param>
     /// <returns>The factorial of the number.</returns>
-    public long Factorial(byte number) 
+    public static long Factorial(byte number) 
         => GeneralMath.Factorial(number);
 
     /// <summary>
@@ -111,7 +114,7 @@ public sealed class Globals
     /// <param name="prefix">Prefix to apply</param>
     /// <returns>The Si pefixed number</returns>
     /// <seealso cref="Si"/>
-    public double Prefix(double number, Si prefix)
+    public static double Prefix(double number, Si prefix)
         => GeneralMath.Prefix(number, prefix);
 
     /// <summary>
@@ -362,5 +365,14 @@ public sealed class Globals
     public static T Range<T>(params T[] items) where T : INumber<T>
         => Max(items) - Min(items);
 
+    /// <summary>
+    /// Performs unit conversion
+    /// </summary>
+    /// <param name="value">Value to convert</param>
+    /// <param name="from">source unit</param>
+    /// <param name="to">target unit</param>
+    /// <returns>value converted to target unit</returns>
+    public double UnitConvert(double value, string from, string to)
+        => _unitConversion.Convert(value, from, to);
 
 }
