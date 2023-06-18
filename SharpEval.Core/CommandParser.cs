@@ -5,12 +5,12 @@ namespace SharpEval.Core
     /// <summary>
     /// The main expression command parser
     /// </summary>
-    public sealed class CommandParser : ISettingsProvider
+    public sealed class CommandParser : ISettingsProvider, ICommandHost
     {
         private readonly ICommandReader _commandReader;
         private readonly IResultWrtiter _resultWrtiter;
         private readonly Evaluator _evaluator;
-        private readonly Dictionary<string, Action<Arguments>> _commandTable;
+        private readonly Dictionary<string, ICommand> _commandTable;
 
         private bool _exitFlag;
 
@@ -18,6 +18,18 @@ namespace SharpEval.Core
         /// Current settings
         /// </summary>
         public Settings Settings { get; private set; }
+
+        Settings ICommandHost.Settings => Settings;
+
+        Evaluator ICommandHost.Evaluator => _evaluator;
+
+        bool ICommandHost.ExitFlag 
+        {
+            get => _exitFlag;
+            set => _exitFlag = value;
+        }
+
+        IResultWrtiter ICommandHost.ResultWrtiter => _resultWrtiter;
 
         Settings ISettingsProvider.GetSettings() => Settings;
 
@@ -34,28 +46,13 @@ namespace SharpEval.Core
             _evaluator = new Evaluator(this);
             _commandReader = commandReader;
             _resultWrtiter = resultWrtiter;
-            _commandTable = new Dictionary<string, Action<Arguments>>
-            {
-                { "$echo", (args) => Settings.EchoExpression = args.Get<bool>(0) },
-                { "$mode", (args) => Settings.CurrentAngleSystem = args.GetEnum<AngleSystem>(0) },
-                { "$exit", (args) => _exitFlag = true },
-                { "$reset", (args) => _evaluator.Reset() },
-                { "$vars", PrintVariables }
-            };
+            _commandTable = CommandLoader.LoadCommands();
             _evaluator.OnReset += EvaluatorOnReset;
         }
 
         private void EvaluatorOnReset(object? sender, EventArgs e)
         {
             Settings = new();
-        }
-
-        private void PrintVariables(Arguments arguments)
-        {
-            foreach (var variable in _evaluator.Variables)
-            {
-                _resultWrtiter.Result($"{variable.Key} = {variable.Value} //{variable.Value.GetType().Name}");
-            }
         }
 
         /// <summary>
@@ -80,7 +77,7 @@ namespace SharpEval.Core
                         string command = splitted[0];
                         var arguments = new Arguments(splitted.Skip(1));
                         if (_commandTable.ContainsKey(command))
-                            _commandTable[command].Invoke(arguments);
+                            _commandTable[command].Execute(this, arguments);
                         else
                             _resultWrtiter.Error($"Unknown command: {command}");
                     }
