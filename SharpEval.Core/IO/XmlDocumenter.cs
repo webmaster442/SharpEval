@@ -6,7 +6,7 @@ namespace SharpEval.Core.IO
 {
     internal static class XmlDocumenter
     {
-        private static readonly Dictionary<string, string> _loadedXmlDocumentation = new();
+        private static readonly Dictionary<string, string> LoadedXmlDocumentation = new();
 
         public static void LoadXmlDocumentation(string xmlDocumentation)
         {
@@ -17,7 +17,7 @@ namespace SharpEval.Core.IO
                     if (xmlReader.NodeType == XmlNodeType.Element && xmlReader.Name == "member")
                     {
                         string raw_name = xmlReader["name"] ?? throw new InvalidOperationException("name empty");
-                        _loadedXmlDocumentation[raw_name] = xmlReader.ReadInnerXml();
+                        LoadedXmlDocumentation[raw_name] = xmlReader.ReadInnerXml();
                     }
                 }
             }
@@ -30,7 +30,7 @@ namespace SharpEval.Core.IO
         public static string GetDocumentation(this Type type)
         {
             string key = "T:" + Regex.Replace(type.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.');
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
             return string.Empty;
@@ -62,7 +62,7 @@ namespace SharpEval.Core.IO
                 (genericParameterCounts > 0 ? "``" + genericParameterCounts : string.Empty) +
                 (parameterInfos.Length > 0 ? "(" + string.Join(",", pars) + ")" : string.Empty);
             
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
             return string.Empty;
@@ -79,7 +79,7 @@ namespace SharpEval.Core.IO
                 Regex.Replace(constructorInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + ".#ctor" +
                 (parameterInfos.Length > 0 ? "(" + string.Join(",", parameterInfos.Select(x => x.ParameterType.ToString())) + ")" : string.Empty);
             
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
             return string.Empty;
@@ -92,7 +92,7 @@ namespace SharpEval.Core.IO
         public static string GetDocumentation(this PropertyInfo propertyInfo)
         {
             string key = "P:" + Regex.Replace(propertyInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + "." + propertyInfo.Name;
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
             return string.Empty;
         }
@@ -104,7 +104,7 @@ namespace SharpEval.Core.IO
         public static string GetDocumentation(this FieldInfo fieldInfo)
         {
             string key = "F:" + Regex.Replace(fieldInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + "." + fieldInfo.Name;
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
             return string.Empty;
@@ -117,7 +117,7 @@ namespace SharpEval.Core.IO
         public static string GetDocumentation(this EventInfo eventInfo)
         {
             string key = "E:" + Regex.Replace(eventInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + "." + eventInfo.Name;
-            if (_loadedXmlDocumentation.TryGetValue(key, out string? documentation))
+            if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
             return string.Empty;
