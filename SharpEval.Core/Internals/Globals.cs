@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Numerics;
 
 using SharpEval.Core.Maths;
@@ -375,4 +376,57 @@ public sealed class Globals
     public double UnitConvert(double value, string from, string to)
         => _unitConversion.Convert(value, from, to);
 
+    /// <summary>
+    /// Returns an array with distinct items
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">an array of items</param>
+    /// <returns>an array with distinct items</returns>
+    public static T[] Distinct<T>(params T[] items) where T : IComparable<T>
+        => Arrays.Distinct(items);
+
+    /// <summary>
+    /// Randomizes an array of items
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">an array of items</param>
+    /// <returns>Array of items in randomized order</returns>
+    public static T[] Randomize<T>(params T[] items)
+        => Arrays.Randomize(items);
+
+    /// <summary>
+    /// Pick a random entry from a given array
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">an array of items</param>
+    /// <returns>A random item from the array</returns>
+    public static T RandomPick<T>(params T[] items)
+        => Arrays.RandomPick(items);
+
+    /// <summary>
+    /// Returns the current date and time
+    /// </summary>
+    /// <returns>the current date and time</returns>
+    public static DateTime Date()
+        => DateTime.Now;
+
+    /// <summary>
+    /// Returns the current UTC date and time
+    /// </summary>
+    /// <returns>the current UTC date and time</returns>
+    public static DateTime UtcDate()
+        => DateTime.UtcNow;
+
+    /// <summary>
+    /// Cereate a date and time
+    /// </summary>
+    /// <param name="year">year</param>
+    /// <param name="month">month</param>
+    /// <param name="day">day</param>
+    /// <param name="hour">hour</param>
+    /// <param name="minute">minute</param>
+    /// <param name="second">second</param>
+    /// <returns>A date representing given values</returns>
+    public static DateTime Date(int year, int month, int day, int hour = 0, int minute = 0, int second = 0)
+        => new DateTime(year, month, day, hour, minute, second);
 }
