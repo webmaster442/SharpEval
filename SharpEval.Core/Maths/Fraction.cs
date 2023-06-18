@@ -233,5 +233,14 @@ namespace SharpEval.Core.Maths
         {
             return left.CompareTo(right) >= 0;
         }
+
+        /// <summary>
+        /// Create a fraction from a long value
+        /// </summary>
+        /// <param name="number">number</param>
+        public static implicit operator Fraction (long number)
+        {
+            return new Fraction(number, 1);
+        }
     }
 }
