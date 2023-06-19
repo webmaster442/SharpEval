@@ -79,6 +79,7 @@ internal class TestEvaluator
     [TestCase("Prefix(5, Si.Giga)", "5000000000")]
     [TestCase("Factorial(5)", "120")]
     [TestCase("Factorial(7)", "5040")]
+    [TestCase("Fraction(1, 5)*4", "4/5")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         (string error, string result) = await _sut.EvaluateAsync(input);
