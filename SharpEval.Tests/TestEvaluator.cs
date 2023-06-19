@@ -82,20 +82,20 @@ internal class TestEvaluator
     [TestCase("Fraction(1, 5)*4", "4/5")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
-        (string error, string result) = await _sut.EvaluateAsync(input);
-        if (!string.IsNullOrEmpty(error)) 
+        var result = await _sut.EvaluateAsync(input);
+        if (!string.IsNullOrEmpty(result.Error)) 
         {
-            Assert.Fail(error);
+            Assert.Fail(result.Error);
         }
-        Assert.That(result, Is.EqualTo(expected));
+        Assert.That(result.ToString(), Is.EqualTo(expected));
     }
 
     [Test]
     public async Task EnsureThat_Evaluator_EvaluateAsync_CanCreateVariables()
     {
         await _sut.EvaluateAsync("var foo = 42");
-        (string error, string result) = await _sut.EvaluateAsync("foo");
-        Assert.That(result, Is.EqualTo("42"));
+        var result = await _sut.EvaluateAsync("foo");
+        Assert.That(result.ResultData, Is.EqualTo(42));
     }
 
     [Test]

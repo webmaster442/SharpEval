@@ -18,9 +18,14 @@
         /// <param name="message">error message string</param>
         void Error(string message);
         /// <summary>
-        /// Writes the result
+        /// Writes result as a string
         /// </summary>
         /// <param name="result">result string</param>
         void Result(string result);
+        /// <summary>
+        /// Write result that is a table
+        /// </summary>
+        /// <param name="tableRows">table rows</param>
+        void ResultTable(IEnumerable<ITableRow> tableRows);
     }
 }

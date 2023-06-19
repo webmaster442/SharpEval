@@ -1,4 +1,6 @@
-﻿using SharpEval.Core.Internals;
+﻿using System.Diagnostics;
+
+using SharpEval.Core.Internals;
 
 namespace SharpEval.Core
 {
@@ -102,10 +104,27 @@ namespace SharpEval.Core
                     if (Settings.EchoExpression)
                         _resultWrtiter.Echo(Settings.CurrentAngleSystem, input);
 
-                    if (string.IsNullOrEmpty(result.error))
-                        _resultWrtiter.Result(result.result);
+                    if (!string.IsNullOrEmpty(result.Error))
+                    {
+                        _resultWrtiter.Error(result.Error);
+                    }
                     else
-                        _resultWrtiter.Error(result.error);
+                    {
+                        switch (result.ResultTypeInformation)
+                        {
+                            case EvaluatorResult.ResultType.Null:
+                                break;
+                            case EvaluatorResult.ResultType.Table:
+                                _resultWrtiter.ResultTable(result.ToTable());
+                                break;
+                            case EvaluatorResult.ResultType.SingleLine:
+                                _resultWrtiter.Result(result.ToString());
+                                break;
+                            default:
+                                throw new UnreachableException("Unknown result type");
+
+                        }
+                    }
                 }
 
                 if (_exitFlag)

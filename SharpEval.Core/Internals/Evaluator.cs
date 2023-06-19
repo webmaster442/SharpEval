@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.Scripting;
 using SharpEval.Core.Maths;
 
 namespace SharpEval.Core.Internals;
+
 internal sealed class Evaluator
 {
     private readonly ScriptOptions _options;
@@ -61,7 +62,7 @@ internal sealed class Evaluator
         }
     }
 
-    public async Task<(string error, string result)> EvaluateAsync(string expression)
+    public async Task<EvaluatorResult> EvaluateAsync(string expression)
     {
         string expressionToRun = PreprocessExpression(expression);
         try
@@ -71,12 +72,20 @@ internal sealed class Evaluator
             else
                 _state = await _state.ContinueWithAsync(expressionToRun, _options);
 
-            return (string.Empty, ResultToString());
+            return new EvaluatorResult
+            {
+                ResultData = _state?.ReturnValue,
+                Error = string.Empty
+            };
 
         }
         catch (Exception ex)
         {
-            return (ex.Message, string.Empty);
+            return new EvaluatorResult
+            { 
+                Error = ex.Message,
+                ResultData = null,
+            };
         }
     }
 
@@ -86,17 +95,5 @@ internal sealed class Evaluator
             return $"{expression};";
 
         return expression;
-    }
-
-    private string ResultToString()
-    {
-        if (_state?.ReturnValue == null)
-            return string.Empty;
-
-        return _state.ReturnValue switch
-        {
-            IFormattable formattable => formattable.ToString("", CultureInfo.InvariantCulture),
-            _ => _state?.ReturnValue.ToString() ?? string.Empty
-        };
     }
 }

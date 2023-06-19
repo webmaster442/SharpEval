@@ -37,6 +37,22 @@ namespace SharpEval.Core.IO
         }
 
         /// <inheritdoc/>
+        public void ResultTable(IEnumerable<ITableRow> tableRows)
+        {
+            _buffer.Append("<table>");
+            foreach (ITableRow row in tableRows)
+            {
+                _buffer.Append("<tr>");
+                foreach (var column in row.Columns) 
+                {
+                    _buffer.AppendFormat("<td>{0}</td>", column);
+                }
+                _buffer.Append("</tr>");
+            }
+            _buffer.Append("</table>");
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return _buffer.ToString();
