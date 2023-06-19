@@ -91,11 +91,32 @@ internal class TestEvaluator
     }
 
     [Test]
+    public async Task EnsureThat_Evaluator_ResetWorks()
+    {
+        await _sut.EvaluateAsync("var foo = 42");
+        _sut.Reset();
+        Assert.That(_sut.Variables.Count, Is.EqualTo(0));
+    }
+
+   [Test]
     public async Task EnsureThat_Evaluator_EvaluateAsync_CanCreateVariables()
     {
         await _sut.EvaluateAsync("var foo = 42");
         var result = await _sut.EvaluateAsync("foo");
-        Assert.That(result.ResultData, Is.EqualTo(42));
+        Assert.Multiple(() =>
+        {
+            Assert.That(result.ResultData, Is.EqualTo(42));
+            Assert.That(_sut.Variables.Count, Is.EqualTo(1));
+        });
+    }
+
+    [TestCase("string x = null", EvaluatorResult.ResultType.Null)]
+    [TestCase("3+2", EvaluatorResult.ResultType.SingleLine)]
+    [TestCase("new int[1, 2, 3]", EvaluatorResult.ResultType.Table)]
+    public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsCorrectTypeInformation(string input, EvaluatorResult.ResultType resultType)
+    {
+        var result = await _sut.EvaluateAsync(input);
+        Assert.That(result.ResultTypeInformation, Is.EqualTo(resultType));
     }
 
     [Test]

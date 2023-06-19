@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents a table row
     /// </summary>
-    public interface ITableRow
+    public interface ITableRow : IEquatable<ITableRow?>
     {
         /// <summary>
         /// Number of columns

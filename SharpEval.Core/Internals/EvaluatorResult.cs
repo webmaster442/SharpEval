@@ -53,18 +53,14 @@ internal sealed record class EvaluatorResult
                 yield return new TableRow(item.Key?.ToString() ?? string.Empty, item.Value?.ToString() ?? string.Empty);
             }
         }
-        else if (ResultData is IEnumerable<IFormattable> formattable)
-        {
-            foreach (var row in formattable) 
-            {
-                yield return new TableRow(row.ToString("", CultureInfo.InvariantCulture));
-            }
-        }
         else if (ResultData is IEnumerable enumerable)
         {
             foreach (var row in enumerable)
             {
-                yield return new TableRow(row.ToString() ?? string.Empty);
+                if (row is IFormattable formattable)
+                    yield return new TableRow(formattable.ToString("", CultureInfo.InvariantCulture));
+                else
+                    yield return new TableRow(row.ToString() ?? string.Empty);
             }
         }
         else
