@@ -4,15 +4,26 @@ using PrettyPrompt.Consoles;
 using PrettyPrompt.Documents;
 using PrettyPrompt.Highlighting;
 
+using SharpEval.Core.IO;
+
 namespace SharpEval
 {
     internal class PropmptCallbacks : PromptCallbacks
     {
-        private readonly IDictionary<string, List<string>> _documentation;
+        private readonly IDocumentationProvider _documentationProvider;
 
-        public PropmptCallbacks(IDictionary<string, List<string>> documentation)
+        public PropmptCallbacks(IDocumentationProvider documentationProvider)
         {
-            _documentation = documentation;
+            _documentationProvider = documentationProvider;
+        }
+
+        protected override Task<(string Text, int Caret)> FormatInput(string text, int caret, KeyPress keyPress, CancellationToken cancellationToken)
+        {
+            if (text.StartsWith("$$"))
+            {
+                return base.FormatInput(text.Replace("$$", "$"), caret - 1, keyPress, cancellationToken);
+            }
+            return base.FormatInput(text, caret, keyPress, cancellationToken);
         }
 
         protected override async Task<KeyPress> TransformKeyPressAsync(string text,
@@ -38,7 +49,8 @@ namespace SharpEval
 
             var keyWord = text.Substring(spanToBeReplaced.Start);
 
-            var candidates = _documentation
+            var candidates = _documentationProvider
+                 .GetDocumentations()
                  .Where(x => x.Key.StartsWith(keyWord, StringComparison.InvariantCultureIgnoreCase))
                  .OrderBy(x => x.Key);
 

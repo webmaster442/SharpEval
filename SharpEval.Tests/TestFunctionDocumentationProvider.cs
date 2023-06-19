@@ -16,7 +16,7 @@ namespace SharpEval.Tests
         [Test]
         public void TestDocumentationLoad()
         {
-            Assert.That(_sut.Documentation.Count > 0, Is.True);
+            Assert.That(_sut.GetDocumentations().Count > 0, Is.True);
         }
 
         [Test]
@@ -24,10 +24,10 @@ namespace SharpEval.Tests
         {
             Assert.Multiple(() =>
             {
-                Assert.That(_sut.Documentation.ContainsKey("ToString"), Is.False);
-                Assert.That(_sut.Documentation.ContainsKey("GetHashCode"), Is.False);
-                Assert.That(_sut.Documentation.ContainsKey("Equals"), Is.False);
-                Assert.That(_sut.Documentation.ContainsKey("GetType"), Is.False);
+                Assert.That(_sut.GetDocumentations().ContainsKey("ToString"), Is.False);
+                Assert.That(_sut.GetDocumentations().ContainsKey("GetHashCode"), Is.False);
+                Assert.That(_sut.GetDocumentations().ContainsKey("Equals"), Is.False);
+                Assert.That(_sut.GetDocumentations().ContainsKey("GetType"), Is.False);
             });
         }
     }

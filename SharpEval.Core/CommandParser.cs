@@ -50,6 +50,15 @@ namespace SharpEval.Core
             _evaluator.OnReset += EvaluatorOnReset;
         }
 
+        /// <summary>
+        /// Get registered command documentation
+        /// </summary>
+        /// <returns>Documentation as a Dictionary</returns>
+        public IReadOnlyDictionary<string, string> GetCommandDocumentation()
+        {
+            return _commandTable.ToDictionary(x => x.Key, x => x.Value.HelpMessage);
+        }
+
         private void EvaluatorOnReset(object? sender, EventArgs e)
         {
             Settings = new();

@@ -1,6 +1,7 @@
 ﻿using PrettyPrompt;
 
 using SharpEval.Core;
+using SharpEval.Core.IO;
 
 namespace SharpEval
 {
@@ -11,17 +12,16 @@ namespace SharpEval
         private readonly CancellationTokenSource _tokenSource;
         private bool _disposed = false;
 
-
         public CancellationToken CancellationToken => _tokenSource.Token;
 
         public Func<string>? PromptFunction { get; set; }
 
-        public ConsoleCommandReader(IDictionary<string, List<string>> documentation)
+        public ConsoleCommandReader(IDocumentationProvider documentationProvider)
         {
             Console.CancelKeyPress += OnExitRequest;
             _tokenSource = new CancellationTokenSource();
             _configuration = new PromptConfiguration();
-            _prompt = new Prompt(null, new PropmptCallbacks(documentation), null, _configuration);
+            _prompt = new Prompt(null, new PropmptCallbacks(documentationProvider), null, _configuration);
         }
 
         private void OnExitRequest(object? sender, ConsoleCancelEventArgs e)

@@ -4,20 +4,18 @@ using System.Text.RegularExpressions;
 
 using SharpEval.Core.Internals;
 
-using UnitsNet;
-
 namespace SharpEval.Core.IO
 {
     /// <summary>
     /// Provides documentation for globaly registered functions
     /// </summary>
-    public sealed partial class FunctionDocumentationProvider
+    public sealed partial class FunctionDocumentationProvider : IDocumentationProvider
     {
         /// <summary>
         /// Documentations
         /// </summary>
-        public Dictionary<string, List<string>> Documentation { get; }
-        
+        private Dictionary<string, List<string>> _documentation;
+
         private readonly HashSet<string> _ignoreNames;
 
         /// <summary>
@@ -33,14 +31,20 @@ namespace SharpEval.Core.IO
             {
                 "ToString", "GetHashCode", "Equals", "GetType"
             };
-            Documentation = new Dictionary<string, List<string>>();
+            _documentation = new Dictionary<string, List<string>>();
             var members = typeof(Globals).GetMembers();
             Fill(members);
         }
 
+        /// <inheritdoc/>
+        public IReadOnlyDictionary<string, List<string>> GetDocumentations()
+        {
+            return _documentation;
+        }
+
         private static string FixName(string name)
         {
-            if (name.StartsWith("get_") 
+            if (name.StartsWith("get_")
                 || name.StartsWith("set_"))
             {
                 return name[4..];
@@ -49,9 +53,29 @@ namespace SharpEval.Core.IO
             return name;
         }
 
+        /// <summary>
+        /// Add command documentation
+        /// </summary>
+        /// <param name="docs">command documentation</param>
+        public void AddCommandDocumentation(IReadOnlyDictionary<string, string> docs)
+        {
+            foreach (var doc in docs)
+            {
+                if (_documentation.TryGetValue(doc.Key, out List<string>? value))
+                {
+                    value.Add(doc.Value);
+                }
+                else
+                {
+                    _documentation.Add(doc.Key, new List<string> { doc.Value });
+                }
+            }
+        }
+
+
         private void Fill(MemberInfo[] members)
         {
-            foreach (var member in members) 
+            foreach (var member in members)
             {
                 if (_ignoreNames.Contains(member.Name))
                     continue;
@@ -64,13 +88,13 @@ namespace SharpEval.Core.IO
 
                 string cleanDoc = Clean(doc);
 
-                if (Documentation.TryGetValue(key, out List<string>? value))
+                if (_documentation.TryGetValue(key, out List<string>? value))
                 {
                     value.Add(cleanDoc);
                 }
                 else
                 {
-                    Documentation.Add(key, new List<string> { cleanDoc });
+                    _documentation.Add(key, new List<string> { cleanDoc });
                 }
             }
         }
@@ -84,7 +108,7 @@ namespace SharpEval.Core.IO
             const string elementSummaryEnd = "</summary>";
             const string elementReturns = "<returns>";
 
-            StringBuilder final = new StringBuilder();
+            StringBuilder final = new();
             int paramCounter = 0;
             using (var reader = new StringReader(doc))
             {
