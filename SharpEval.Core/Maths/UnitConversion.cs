@@ -13,14 +13,14 @@ namespace SharpEval.Core.Maths
         {
             foreach (var unit in units)
             {
-                _units.Add(unit);
+                _units.Add(unit.ToLower());
             }
         }
 
         public UnitConversion(CultureInfo cultureInfo)
         {
-            _units = new HashSet<string>();
-            _conversions = new Dictionary<string, HashSet<string>>();
+            _units = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            _conversions = new Dictionary<string, HashSet<string>>(StringComparer.OrdinalIgnoreCase);
 
             foreach (var info in Quantity.Infos)
             {
@@ -30,7 +30,7 @@ namespace SharpEval.Core.Maths
                     UnitAbbreviationsCache.Default
                     .GetAllUnitAbbreviationsForQuantity(info.UnitType, cultureInfo);
 
-                _conversions.Add(info.Name, names.Concat(abbreviations).ToHashSet());
+                _conversions.Add(info.Name, names.Concat(abbreviations).ToHashSet(StringComparer.OrdinalIgnoreCase));
 
                 AddToUnits(names);
                 AddToUnits(abbreviations);

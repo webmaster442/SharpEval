@@ -33,6 +33,56 @@ namespace SharpEval.Tests
         }
 
         [Test]
+        public void EnsureThat_EvaluatorResult_ToTable_WorksDictionary()
+        {
+            var testObject = new EvaluatorResult
+            {
+                Error = string.Empty,
+                ResultData = new Dictionary<string, string>
+                {
+                    { "foo", "bar" },
+                    { "bar", "baz" }
+                }
+            };
+
+            var expected = new TableRow[]
+            {
+                new TableRow("foo", "bar"),
+                new TableRow("bar", "baz")
+            };
+
+            var result = testObject.ToTable();
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void EnsureThat_EvaluatorResult_ToTable_WorksObject()
+        {
+            var testObject = new EvaluatorResult
+            {
+                Error = string.Empty,
+                ResultData = new
+                {
+                    Foo = 1.1,
+                    Bar = "this is a string",
+                    Int = 42,
+                }
+            };
+
+            var expected = new TableRow[]
+            {
+                new TableRow("Foo", "1,1"),
+                new TableRow("Bar", "this is a string"),
+                new TableRow("Int", "42")
+            };
+
+            var result = testObject.ToTable();
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
+
+        [Test]
         public void EnsureThat_EvaluatorResult_ToTable_WorksFormattableEnumerable()
         {
             var testObject = new EvaluatorResult

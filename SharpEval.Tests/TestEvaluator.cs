@@ -80,6 +80,8 @@ internal class TestEvaluator
     [TestCase("Factorial(5)", "120")]
     [TestCase("Factorial(7)", "5040")]
     [TestCase("Fraction(1, 5)*4", "4/5")]
+    [TestCase("UnitConvert(1, \"meter\", \"foot\")", "3.280839895013123")]
+    [TestCase("UnitConvert(1, \"m\", \"ft\")", "3.280839895013123")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);
@@ -88,6 +90,19 @@ internal class TestEvaluator
             Assert.Fail(result.Error);
         }
         Assert.That(result.ToString(), Is.EqualTo(expected));
+    }
+
+    [TestCase("UnitConvert(1, \"meter\", \"feet\")", "Unknown unit: feet")]
+    [TestCase("UnitConvert(1, \"feet\", \"meter\")", "Unknown unit: feet")]
+    [TestCase("UnitConvert(1, \"meter\", \"liter\")", "Can't convert from meter to liter")]
+    public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpectedError(string input, string expected)
+    {
+        var result = await _sut.EvaluateAsync(input);
+        if (string.IsNullOrEmpty(result.Error))
+        {
+            Assert.Fail("There was no issue");
+        }
+        Assert.That(result.Error, Is.EqualTo(expected));
     }
 
     [Test]

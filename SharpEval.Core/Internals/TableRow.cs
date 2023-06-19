@@ -9,11 +9,6 @@ internal sealed class TableRow : ITableRow
         _items = items;
     }
 
-    public TableRow(IEnumerable<object> items)
-    {
-        _items = items.Select(x => x?.ToString() ?? string.Empty).ToArray();
-    }
-
     public int ColumnCount => _items.Length;
 
     public IEnumerable<string> Columns => _items;

@@ -39,6 +39,7 @@ namespace SharpEval.Tests
         {
             _commands.Clear();
             _commands.Add("$echo off");
+            _commands.Add("$echo false");
             _commands.Add("3+2");
 
             await _sut.RunAsync();
