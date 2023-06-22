@@ -49,10 +49,15 @@ namespace SharpEval.Core.IO
 
             var pars = parameterInfos.Select(x =>
             {
-                int genericIndex = Array.IndexOf(genericTypes, x.ParameterType);
+                int genericIndex = Array.IndexOf(genericTypes,
+                                                 x.ParameterType.IsArray
+                                                 ? x.ParameterType.GetElementType() 
+                                                 : x.ParameterType);
                 if (genericIndex != -1)
                 {
-                    return $"``{genericIndex}";
+                    return x.ParameterType.IsArray 
+                        ? $"``{genericIndex}[]"
+                        : $"``{genericIndex}";
                 }
                 return x.ParameterType.ToString();
             });

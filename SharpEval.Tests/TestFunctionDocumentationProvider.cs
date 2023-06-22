@@ -30,5 +30,31 @@ namespace SharpEval.Tests
                 Assert.That(_sut.GetDocumentations().ContainsKey("GetType"), Is.False);
             });
         }
+
+        private List<string>? GetDocumentation(string itemName)
+        {
+            return _sut.GetDocumentations()
+                .Where(x => x.Key == itemName)
+                .Select(x => x.Value)
+                .FirstOrDefault();
+        }
+
+        [TestCase("Pi")]
+        [TestCase("E")]
+        [TestCase("Date")]
+        [TestCase("Gcd")]
+        [TestCase("Count")]
+        [TestCase("Average")]
+        [TestCase("Randomize")]
+        public void TestDocumentation(string itemName)
+        {
+            var keys = _sut.GetDocumentations().Select(x => x.Key);
+            var document = GetDocumentation(itemName);
+            Assert.Multiple(() =>
+            {
+                Assert.That(document, Is.Not.Null);
+                Assert.That(document, Is.Not.Empty);
+            });
+        }
     }
 }
