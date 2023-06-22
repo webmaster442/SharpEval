@@ -13,11 +13,14 @@ public sealed class Globals
 {
     private readonly ISettingsProvider _settingsProvider;
     private readonly UnitConversion _unitConversion;
+    
+    internal Random RandomGenerator { get; set; }
 
     internal Globals(ISettingsProvider settingsProvider)
     {
         _settingsProvider = settingsProvider;
         _unitConversion = new UnitConversion(CultureInfo.InvariantCulture);
+        RandomGenerator = new Random();
     }
 
     /// <summary>
@@ -391,8 +394,8 @@ public sealed class Globals
     /// <typeparam name="T">Type</typeparam>
     /// <param name="items">an array of items</param>
     /// <returns>Array of items in randomized order</returns>
-    public static T[] Randomize<T>(params T[] items)
-        => Arrays.Randomize(items);
+    public T[] Randomize<T>(params T[] items)
+        => Arrays.Randomize(RandomGenerator, items);
 
     /// <summary>
     /// Pick a random entry from a given array
@@ -400,8 +403,8 @@ public sealed class Globals
     /// <typeparam name="T">Type</typeparam>
     /// <param name="items">an array of items</param>
     /// <returns>A random item from the array</returns>
-    public static T RandomPick<T>(params T[] items)
-        => Arrays.RandomPick(items);
+    public T RandomPick<T>(params T[] items)
+        => Arrays.RandomPick(RandomGenerator, items);
 
     /// <summary>
     /// Returns the current date and time

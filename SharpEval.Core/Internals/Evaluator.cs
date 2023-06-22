@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Text;
+﻿using System.Text;
 
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
@@ -16,6 +15,11 @@ internal sealed class Evaluator
     private ScriptState<object>? _state;
 
     public event EventHandler? OnReset;
+
+    internal void SetRandomSeed(int seed)
+    {
+        _globals.RandomGenerator = new Random(seed);
+    }
 
     public Evaluator(ISettingsProvider settingsProvider)
     {

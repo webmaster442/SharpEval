@@ -1,4 +1,7 @@
-﻿using Moq;
+﻿using System.Collections;
+using System.Globalization;
+
+using Moq;
 
 using SharpEval.Core.Internals;
 
@@ -21,6 +24,20 @@ internal class TestEvaluator
         _settingProviderMock = new Mock<ISettingsProvider>(MockBehavior.Strict);
         _settingProviderMock.Setup(x => x.GetSettings()).Returns(_settings);
         _sut = new Evaluator(_settingProviderMock.Object);
+        _sut.SetRandomSeed(4);
+    }
+
+    private static string? TestFormat(object? result)
+    {
+        if (result is IEnumerable<int> enumerable)
+        {
+            return string.Join(", ", enumerable);
+        }
+        else if (result is IFormattable formattable)
+        {
+            return formattable.ToString("", CultureInfo.InvariantCulture);
+        }
+        return result?.ToString();
     }
 
     [TestCase("Pi", "3.141592653589793")]
@@ -82,6 +99,13 @@ internal class TestEvaluator
     [TestCase("Fraction(1, 5)*4", "4/5")]
     [TestCase("UnitConvert(1, \"meter\", \"foot\")", "3.280839895013123")]
     [TestCase("UnitConvert(1, \"m\", \"ft\")", "3.280839895013123")]
+    [TestCase("Distinct(1, 1, 2, 3, 3)", "1, 2, 3")]
+    [TestCase("Randomize(1, 2, 3)", "3, 1, 2")]
+    [TestCase("RandomPick(1, 2, 3)", "3")]
+    [TestCase("Date(1914, 1, 1)", "01/01/1914 00:00:00")]
+    [TestCase("Date(1914, 1, 1, 11, 52)", "01/01/1914 11:52:00")]
+    [TestCase("Date(1914, 1, 1, 11, 33, 22)", "01/01/1914 11:33:22")]
+    [TestCase("Lcm(5, 2)", "10")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);
@@ -89,7 +113,7 @@ internal class TestEvaluator
         {
             Assert.Fail(result.Error);
         }
-        Assert.That(result.ToString(), Is.EqualTo(expected));
+        Assert.That(TestFormat(result.ResultData), Is.EqualTo(expected));
     }
 
     [TestCase("UnitConvert(1, \"meter\", \"feet\")", "Unknown unit: feet")]
