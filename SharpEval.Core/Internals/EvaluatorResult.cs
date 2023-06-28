@@ -35,6 +35,9 @@ internal sealed record class EvaluatorResult
             if (ResultData == null)
                 return ResultType.Null;
 
+            if (ResultData.IsValueTuple())
+                return ResultType.SingleLine;
+
             if (ResultData is IEnumerable
                 || ResultData is not IFormattable)
             {
