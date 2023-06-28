@@ -93,6 +93,8 @@ internal class TestEvaluator
     [TestCase("Average(1, 2, 3)", "2")]
     [TestCase("Range(1, 2, 3)", "2")]
     [TestCase("Prefix(5, Si.Milli)", "0.005")]
+    [TestCase("Prefix(1000)", "(1, Kilo)")]
+    [TestCase("Prefix(1)", "(1, None)")]
     [TestCase("Prefix(5, Si.Giga)", "5000000000")]
     [TestCase("Factorial(5)", "120")]
     [TestCase("Factorial(7)", "5040")]

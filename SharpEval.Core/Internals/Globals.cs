@@ -122,6 +122,14 @@ public sealed class Globals
         => GeneralMath.Prefix(number, prefix);
 
     /// <summary>
+    /// Get the Si prefix of a value
+    /// </summary>
+    /// <param name="number">A number</param>
+    /// <returns>value expressed in an SI prefix</returns>
+    public static (double number, Si prefix) Prefix(double number)
+        => GeneralMath.Prefix(number);
+
+    /// <summary>
     /// Returns the sine of the specified angle.
     /// </summary>
     /// <param name="number">An angle, measured in the current angle system</param>

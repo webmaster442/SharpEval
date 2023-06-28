@@ -73,5 +73,17 @@ namespace SharpEval.Tests
 
             Assert.That(_sut.Settings.CurrentAngleSystem, Is.EqualTo(AngleSystem.Rad));
         }
+
+        [Test]
+        public async Task Vars()
+        {
+            _commands.Clear();
+            _commands.Add("var x = 11");
+            _commands.Add("$vars");
+
+            await _sut.RunAsync();
+
+            _resultWriterMock.Verify(x => x.Result(It.Is<string>(x => x == "x = 11 //Int32")), Times.Once);
+        }
     }
 }

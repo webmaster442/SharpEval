@@ -91,6 +91,30 @@
             return value * multiplier;
         }
 
+        public static (double number, Si prefix) Prefix(double value)
+        {
+            var table = Enum.GetValues<Si>()
+                .Select(x => new
+                {
+                    Value = (int)x,
+                    Name = x.ToString()
+                })
+                .OrderByDescending(x => x.Value);
+
+            foreach (var entry in table)
+            {
+                double multiplier = Math.Pow(10, entry.Value);
+                if (value < multiplier) continue;
+
+                double number =  value / multiplier;
+                Si prefix = Enum.Parse<Si>(entry.Name);
+
+                return (number, prefix);
+            }
+
+            return (value, Si.None);
+        }
+
         public static long Factorial(int n)
         {
             long value = 1;

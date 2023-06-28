@@ -53,6 +53,10 @@ namespace SharpEval.Core.Maths
         /// </summary>
         Deca = 1,
         /// <summary>
+        /// No power
+        /// </summary>
+        None = 0,
+        /// <summary>
         /// 10 to the power of 2
         /// </summary>
         Hecto = 2,
