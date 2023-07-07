@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using System.Numerics;
 
-namespace SharpEval.Core.Maths
+namespace SharpEval.Core.Maths.Sequences
 {
     /// <summary>
     /// Represents a base class for number series
     /// </summary>
-    public abstract class NumberSeriesBase : IEnumerable<long>,
-        IAdditionOperators<NumberSeriesBase, NumberSeriesBase, IEnumerable<long>>,
-        ISubtractionOperators<NumberSeriesBase, NumberSeriesBase, IEnumerable<long>>,
-        IMultiplyOperators<NumberSeriesBase, NumberSeriesBase, IEnumerable<long>>,
-        IDivisionOperators<NumberSeriesBase, NumberSeriesBase, IEnumerable<double>>
+    public abstract class NumberSequenceBase : IEnumerable<long>,
+        IAdditionOperators<NumberSequenceBase, NumberSequenceBase, IEnumerable<long>>,
+        ISubtractionOperators<NumberSequenceBase, NumberSequenceBase, IEnumerable<long>>,
+        IMultiplyOperators<NumberSequenceBase, NumberSequenceBase, IEnumerable<long>>,
+        IDivisionOperators<NumberSequenceBase, NumberSequenceBase, IEnumerable<double>>
     {
 
         /// <summary>
@@ -19,6 +19,7 @@ namespace SharpEval.Core.Maths
         public abstract long Minimum
         {
             get;
+            set;
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace SharpEval.Core.Maths
         public abstract IEnumerator<long> GetEnumerator();
 
         /// <inheritdoc/>
-        public static IEnumerable<long> operator + (NumberSeriesBase left, NumberSeriesBase right)
+        public static IEnumerable<long> operator +(NumberSequenceBase left, NumberSequenceBase right)
         {
             foreach ((long First, long Second) in left.Zip(right))
             {
@@ -49,7 +50,7 @@ namespace SharpEval.Core.Maths
         }
 
         /// <inheritdoc/>
-        public static IEnumerable<long> operator -(NumberSeriesBase left, NumberSeriesBase right)
+        public static IEnumerable<long> operator -(NumberSequenceBase left, NumberSequenceBase right)
         {
             foreach ((long First, long Second) in left.Zip(right))
             {
@@ -58,7 +59,7 @@ namespace SharpEval.Core.Maths
         }
 
         /// <inheritdoc/>
-        public static IEnumerable<long> operator *(NumberSeriesBase left, NumberSeriesBase right)
+        public static IEnumerable<long> operator *(NumberSequenceBase left, NumberSequenceBase right)
         {
             foreach ((long First, long Second) in left.Zip(right))
             {
@@ -67,7 +68,7 @@ namespace SharpEval.Core.Maths
         }
 
         /// <inheritdoc/>
-        public static IEnumerable<double> operator /(NumberSeriesBase left, NumberSeriesBase right)
+        public static IEnumerable<double> operator /(NumberSequenceBase left, NumberSequenceBase right)
         {
             foreach ((long First, long Second) in left.Zip(right))
             {

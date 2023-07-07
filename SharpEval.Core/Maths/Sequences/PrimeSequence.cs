@@ -1,12 +1,16 @@
-﻿namespace SharpEval.Core.Maths
+﻿namespace SharpEval.Core.Maths.Sequences
 {
     /// <summary>
-    /// Represents prime number series
+    /// Represents prime number Sequence
     /// </summary>
-    public sealed class PrimeSeries : NumberSeriesBase
+    public sealed class PrimeSequence : NumberSequenceBase
     {
         /// <inheritdoc/>
-        public override long Minimum => 0;
+        public override long Minimum 
+        {
+            get => 0;
+            set => throw new NotSupportedException("Can't change minumum");
+        }
 
         /// <inheritdoc/>
         public override IEnumerator<long> GetEnumerator()

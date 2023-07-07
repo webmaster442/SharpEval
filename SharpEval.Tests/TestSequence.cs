@@ -1,14 +1,33 @@
-﻿using SharpEval.Core.Maths;
+﻿using SharpEval.Core.Maths.Sequences;
 
 namespace SharpEval.Tests
 {
     [TestFixture]
-    internal class TestSeries
+    internal class TestSequence
     {
+        [Test]
+        public void TestAtithmetic()
+        {
+            ArithmeticSequence squence = new ArithmeticSequence(4)
+            {
+                Maximum = 30,
+                Minimum = 3,
+            };
+
+            var result = squence.ToArray();
+
+            long[] expected = new long[]
+            {
+                3, 7, 11, 15, 19, 23, 27
+            };
+
+            CollectionAssert.AreEqual(expected, result);
+        }
+
         [Test]
         public void TestPrimes()
         {
-            PrimeSeries primes = new PrimeSeries
+            PrimeSequence primes = new PrimeSequence
             {
                 Maximum = 100,
             };
@@ -29,7 +48,7 @@ namespace SharpEval.Tests
         [Test]
         public void TestFibonacci()
         {
-            FibonacciSeries fibonacci = new FibonacciSeries
+            FibonacciSequence fibonacci = new FibonacciSequence
             {
                 Maximum = 100,
             };
@@ -47,11 +66,11 @@ namespace SharpEval.Tests
         [Test]
         public void TestAdd()
         {
-            FibonacciSeries a = new FibonacciSeries
+            FibonacciSequence a = new FibonacciSequence
             {
                 Maximum = 100,
             };
-            FibonacciSeries b = new FibonacciSeries
+            FibonacciSequence b = new FibonacciSequence
             {
                 Maximum = 10,
             };
@@ -69,11 +88,11 @@ namespace SharpEval.Tests
         [Test]
         public void TestSubtract()
         {
-            FibonacciSeries a = new FibonacciSeries
+            FibonacciSequence a = new FibonacciSequence
             {
                 Maximum = 100,
             };
-            FibonacciSeries b = new FibonacciSeries
+            FibonacciSequence b = new FibonacciSequence
             {
                 Maximum = 10,
             };
@@ -91,11 +110,11 @@ namespace SharpEval.Tests
         [Test]
         public void TestMultiply()
         {
-            FibonacciSeries a = new FibonacciSeries
+            FibonacciSequence a = new FibonacciSequence
             {
                 Maximum = 100,
             };
-            FibonacciSeries b = new FibonacciSeries
+            FibonacciSequence b = new FibonacciSequence
             {
                 Maximum = 10,
             };
@@ -114,11 +133,11 @@ namespace SharpEval.Tests
         [Test]
         public void TestDivide()
         {
-            FibonacciSeries a = new FibonacciSeries
+            FibonacciSequence a = new FibonacciSequence
             {
                 Maximum = 100,
             };
-            FibonacciSeries b = new FibonacciSeries
+            FibonacciSequence b = new FibonacciSequence
             {
                 Maximum = 10,
             };
