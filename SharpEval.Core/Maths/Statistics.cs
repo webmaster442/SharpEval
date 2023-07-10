@@ -2,7 +2,7 @@
 
 namespace SharpEval.Core.Maths
 {
-    internal static class Stat
+    internal static class Statistics
     {
         public static T Sum<T>(params T[] items) where T : INumber<T>
         {

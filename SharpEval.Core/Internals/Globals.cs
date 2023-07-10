@@ -4,6 +4,8 @@ using System.Numerics;
 
 using SharpEval.Core.Maths;
 
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 namespace SharpEval.Core.Internals;
 
 /// <summary>
@@ -62,12 +64,29 @@ public sealed class Globals
     public static double Ln(double number) => Math.Log(number);
 
     /// <summary>
+    /// Returns the natural (base e) logarithm of a complex number.
+    /// </summary>
+    /// <param name="number">The number whose logarithm is to be found.</param>
+    /// <returns>the natural (base e) logarithm of the number</returns>
+    public static Complex Ln(Complex number)
+        => System.Numerics.Complex.Log(number);
+
+    /// <summary>
     /// Returns the logarithm of a specified number in a specified base.
     /// </summary>
     /// <param name="number">The number whose logarithm is to be found</param>
     /// <param name="base">The base of the logarithm</param>
     /// <returns>the logarithm of the number in the specified base</returns>
     public static double Log(double number, double @base) => Math.Log(number, @base);
+
+    /// <summary>
+    /// Returns the logarithm of a complex number in a specified base.
+    /// </summary>
+    /// <param name="number">The number whose logarithm is to be found</param>
+    /// <param name="base">The base of the logarithm</param>
+    /// <returns>the logarithm of the number in the specified base</returns>
+    public static Complex Log(Complex number, double @base)
+        => System.Numerics.Complex.Log(number, @base);
 
     /// <summary>
     /// Returns the base 10 logarithm of a specified number.
@@ -77,12 +96,29 @@ public sealed class Globals
     public static double Log10(double number) => Math.Log10(number);
 
     /// <summary>
+    /// Returns the base 10 logarithm of a complex number.
+    /// </summary>
+    /// <param name="number">A number whose logarithm is to be found.</param>
+    /// <returns>the base 10 logarithm of the number</returns>
+    public static Complex Log10(Complex number)
+        => System.Numerics.Complex.Log10(number);
+
+    /// <summary>
     /// Returns a specified number raised to the specified power.
     /// </summary>
     /// <param name="number">A double-precision floating-point number to be raised to a power</param>
     /// <param name="power">A double-precision floating-point number that specifies a power</param>
     /// <returns>The number raised to the power</returns>
     public static double Pow(double number, double power) => Math.Pow(number, power);
+
+    /// <summary>
+    /// Returns a complex number raised to the specified power.
+    /// </summary>
+    /// <param name="number">A double-precision floating-point number to be raised to a power</param>
+    /// <param name="power">A double-precision floating-point number that specifies a power</param>
+    /// <returns>The number raised to the power</returns>
+    public static Complex Pow(Complex number, double power)
+        => System.Numerics.Complex.Pow(number, power);
 
     /// <summary>
     /// Returns an integer that indicates the sign of a double-precision floating-point number.
@@ -102,6 +138,14 @@ public sealed class Globals
     /// <param name="number">The number whose square root is to be found</param>
     /// <returns>The square root of a specified number</returns>
     public static double Sqrt(double number) => Math.Sqrt(number);
+
+    /// <summary>
+    /// Returns the square root of a complex number
+    /// </summary>
+    /// <param name="number">The number whose square root is to be found</param>
+    /// <returns>The square root of a specified number</returns>
+    public static Complex Sqrt(Complex number)
+        => System.Numerics.Complex.Sqrt(number);
 
     /// <summary>
     /// Returns the factorial of a number.
@@ -327,7 +371,7 @@ public sealed class Globals
     /// <param name="items">A sequence of numbers</param>
     /// <returns>The sum of the numbers</returns>
     public static T Sum<T>(params T[] items) where T : INumber<T>
-        => Stat.Sum(items);
+        => Statistics.Sum(items);
 
     /// <summary>
     /// Gets the maximum number from a sequence numbers
@@ -336,7 +380,7 @@ public sealed class Globals
     /// <param name="items">A sequence of numbers</param>
     /// <returns>The maximum of the numbers</returns>
     public static T Max<T>(params T[] items) where T : INumber<T>
-        => Stat.Max(items);
+        => Statistics.Max(items);
 
     /// <summary>
     /// Gets the Minimum number from a sequence numbers
@@ -345,7 +389,7 @@ public sealed class Globals
     /// <param name="items">A sequence of numbers</param>
     /// <returns>The minimum of the numbers</returns>
     public static T Min<T>(params T[] items) where T : INumber<T>
-        => Stat.Min(items);
+        => Statistics.Min(items);
 
     /// <summary>
     /// Returns the number of elements in a sequence
@@ -365,7 +409,7 @@ public sealed class Globals
     /// <param name="items">A sequence of numbers</param>
     /// <returns>the average of a sequence numbers</returns>
     public static double Average<T>(params T[] items) where T : INumber<T>
-        => Stat.Average(items);
+        => Statistics.Average(items);
 
     /// <summary>
     /// Computes the range of a sequence numbers.
