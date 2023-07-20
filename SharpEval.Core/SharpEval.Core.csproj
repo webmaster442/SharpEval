@@ -21,6 +21,7 @@
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.6.0" />
         <PackageReference Include="System.IO.Hashing" Version="7.0.0" />
         <PackageReference Include="UnitsNet" Version="5.26.0" />
+        <PackageReference Include="OxyPlot.Core" Version="2.1.2" />
     </ItemGroup>
 
     <ItemGroup>
