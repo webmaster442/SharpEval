@@ -57,6 +57,7 @@ namespace SharpEval.Core
             {
                 new NullSingleLineResultFormatter(),
                 new EnumerableTableResultFormatter(),
+                new TimeSpanSingleLineResultFormatter(),
                 new FormattableSingleLineResultFormatter(),
                 new ObjectSingleLineResultFormatter(),
                 new ObjectTableResultFormatter(),
