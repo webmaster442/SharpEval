@@ -41,6 +41,11 @@ public sealed class Globals
     public static double E => Math.E;
 
     /// <summary>
+    /// Data plotter
+    /// </summary>
+    public static Plotter Plotter() => new Plotter();
+
+    /// <summary>
     /// Returns the absolute value of a double-precision floating-point number.
     /// </summary>
     /// <param name="number">A number that is greater than or equal to Double.MinValue, but less than or equal to Double.MaxValue.</param>

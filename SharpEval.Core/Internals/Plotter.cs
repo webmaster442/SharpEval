@@ -1,9 +1,7 @@
 ﻿using OxyPlot;
 using OxyPlot.Series;
 
-using SharpEval.Core.Internals;
-
-namespace SharpEval.Core
+namespace SharpEval.Core.Internals
 {
 
     /// <summary>
@@ -12,6 +10,8 @@ namespace SharpEval.Core
     public sealed class Plotter
     {
         private readonly PlotModel _model;
+        private int _width;
+        private int _height;
 
         /// <summary>
         /// Creates a new instance of plotter
@@ -22,6 +22,8 @@ namespace SharpEval.Core
             {
                 Background = OxyColor.FromRgb(255, 255, 255)
             };
+            _width = 1800;
+            _height = 1200;
         }
 
         /// <summary>
@@ -62,6 +64,27 @@ namespace SharpEval.Core
         }
 
         /// <summary>
+        /// Sets the plot area size
+        /// </summary>
+        /// <param name="width">Width. Must be at least 1</param>
+        /// <param name="height">Height. Must be at least 1</param>
+        /// <returns>the current instance</returns>
+        /// <exception cref="ArgumentException">When width or height is smaller than 1</exception>
+        public Plotter Size(int width, int height) 
+        {
+            if (width < 1)
+                throw new ArgumentException("Width must be at least 1 pixel");
+
+            if (height < 1)
+                throw new ArgumentException("Height must be at least 1 pixel");
+
+            _width = width;
+            _height = height;
+
+            return this;
+        }
+
+        /// <summary>
         /// Plot the image
         /// </summary>
         /// <returns>An ISvgImage that can be plotted</returns>
@@ -69,8 +92,8 @@ namespace SharpEval.Core
         {
             var exporter = new SvgExporter
             {
-                Width = 1800,
-                Height = 1200,
+                Width = _width,
+                Height = _height,
             };
             return new SvgImage
             {

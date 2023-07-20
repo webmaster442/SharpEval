@@ -121,6 +121,10 @@ namespace SharpEval.Core
                     {
                         _resultWrtiter.Error(result.Error);
                     }
+                    else if (result.ResultData is ISvgImage svgImage)
+                    {
+                        _resultWrtiter.Result(svgImage);
+                    }
                     else
                     {
                         var formatter = _resultFormatters
