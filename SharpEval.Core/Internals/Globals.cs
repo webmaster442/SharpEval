@@ -41,8 +41,9 @@ public sealed class Globals
     public static double E => Math.E;
 
     /// <summary>
-    /// Data plotter
+    /// Data plotter 
     /// </summary>
+    /// <seealso cref="Plotter"/>
     public static Plotter Plotter() => new Plotter();
 
     /// <summary>
