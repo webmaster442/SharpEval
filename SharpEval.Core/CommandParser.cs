@@ -57,6 +57,7 @@ namespace SharpEval.Core
             {
                 new NullSingleLineResultFormatter(),
                 new EnumerableTableResultFormatter(),
+                new CompexSingleLineResultFormatter(),
                 new TimeSpanSingleLineResultFormatter(),
                 new FormattableSingleLineResultFormatter(),
                 new ObjectSingleLineResultFormatter(),
@@ -130,12 +131,12 @@ namespace SharpEval.Core
 
                         if (formatter is SingleLineResultFormatter singleLineFormatter)
                         {
-                            string resultString = singleLineFormatter.GetString(result.ResultData, CultureInfo.InvariantCulture);
+                            string resultString = singleLineFormatter.GetString(result.ResultData, Settings.CurrentAngleSystem);
                             _resultWrtiter.Result(resultString);
                         }
                         else if (formatter is TableResultFormatter tableResultFormatter)
                         {
-                            var rows = tableResultFormatter.ToTable(result.ResultData, CultureInfo.InvariantCulture);
+                            var rows = tableResultFormatter.ToTable(result.ResultData, Settings.CurrentAngleSystem);
                             _resultWrtiter.ResultTable(rows);
                         }
                         else

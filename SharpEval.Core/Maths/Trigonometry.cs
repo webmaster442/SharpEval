@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks.Dataflow;
 
 namespace SharpEval.Core.Maths
 {
@@ -23,7 +24,7 @@ namespace SharpEval.Core.Maths
             }
         }
 
-        private static double GetDegrees(double radians, AngleSystem angleSystem)
+        public static double GetDegrees(double radians, AngleSystem angleSystem)
         {
             switch (angleSystem)
             {

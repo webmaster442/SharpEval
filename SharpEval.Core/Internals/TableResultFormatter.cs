@@ -1,9 +1,7 @@
-﻿using System.Globalization;
-
-namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals
 {
     internal abstract class TableResultFormatter : ResultFormatter
     {
-        public abstract IEnumerable<ITableRow> ToTable(object? o, CultureInfo culture);
+        public abstract IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem);
     }
 }

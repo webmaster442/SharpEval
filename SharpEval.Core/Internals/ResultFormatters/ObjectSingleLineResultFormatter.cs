@@ -10,7 +10,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
                 o.GetType().GetMethod(nameof(ToString))?.DeclaringType != typeof(object);
         }
 
-        public override string GetString(object? o, CultureInfo culture)
+        public override string GetString(object? o, AngleSystem angleSystem)
         {
             return o?.ToString() ?? string.Empty;
         }

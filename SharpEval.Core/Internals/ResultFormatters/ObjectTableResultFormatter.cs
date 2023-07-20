@@ -32,7 +32,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
         }
 
 
-        public override IEnumerable<ITableRow> ToTable(object? o, CultureInfo culture)
+        public override IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem)
         {
             foreach (var row in GetPropertyValues(o!))
             {

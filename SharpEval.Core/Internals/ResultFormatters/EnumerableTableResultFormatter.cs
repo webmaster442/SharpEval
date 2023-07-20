@@ -10,7 +10,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
             return o is IEnumerable;
         }
 
-        public override IEnumerable<ITableRow> ToTable(object? o, CultureInfo culture)
+        public override IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem)
         {
             if (o is not IEnumerable enumerable)
                 yield break;

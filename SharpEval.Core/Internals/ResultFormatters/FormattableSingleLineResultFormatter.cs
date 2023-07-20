@@ -4,10 +4,10 @@ namespace SharpEval.Core.Internals.ResultFormatters
 {
     internal sealed class FormattableSingleLineResultFormatter : SingleLineResultFormatter
     {
-        public override string GetString(object? o, CultureInfo culture)
+        public override string GetString(object? o, AngleSystem angleSystem)
         {
             if (o is IFormattable formattable)
-                return formattable.ToString(string.Empty, culture);
+                return formattable.ToString(string.Empty, CultureInfo.InvariantCulture);
 
             return string.Empty;
         }

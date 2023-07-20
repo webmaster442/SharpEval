@@ -7,7 +7,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
         private const double AvgDaysPerMonth = 30.436875;
         private const double AvgDaysPerYear = 365.2425;
 
-        public override string GetString(object? o, CultureInfo culture)
+        public override string GetString(object? o, AngleSystem angleSystem)
         {
             if (o is TimeSpan timeSpan)
             {
