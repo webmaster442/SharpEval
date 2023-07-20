@@ -79,6 +79,15 @@ namespace SharpEval.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Load a .cs file into the execution engine. Parameter must be an existing C# file with .cs extension.
+        /// </summary>
+        internal static string CmdLoad {
+            get {
+                return ResourceManager.GetString("CmdLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change angle mode. Supported modes: deg, rad, grad.
         /// </summary>
         internal static string CmdMode {

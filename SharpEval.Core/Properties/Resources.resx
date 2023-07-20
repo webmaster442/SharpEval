@@ -123,6 +123,9 @@
   <data name="CmdExit" xml:space="preserve">
     <value>Exit program</value>
   </data>
+  <data name="CmdLoad" xml:space="preserve">
+    <value>Load a .cs file into the execution engine. Parameter must be an existing C# file with .cs extension</value>
+  </data>
   <data name="CmdMode" xml:space="preserve">
     <value>Change angle mode. Supported modes: deg, rad, grad</value>
   </data>

@@ -19,8 +19,6 @@ namespace SharpEval.Core
         private readonly Dictionary<string, ICommand> _commandTable;
         private readonly ResultFormatter[] _resultFormatters;
 
-
-
         private bool _exitFlag;
 
         /// <summary>
