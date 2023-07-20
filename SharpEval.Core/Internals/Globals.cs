@@ -1,10 +1,7 @@
-﻿using System.Diagnostics.Contracts;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Numerics;
 
 using SharpEval.Core.Maths;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SharpEval.Core.Internals;
 
@@ -23,6 +20,14 @@ public sealed class Globals
         _settingsProvider = settingsProvider;
         _unitConversion = new UnitConversion(CultureInfo.InvariantCulture);
         RandomGenerator = new Random();
+    }
+
+    /// <summary>
+    /// Exit program
+    /// </summary>
+    public static void Exit()
+    {
+        Environment.Exit(0);
     }
 
     /// <summary>
