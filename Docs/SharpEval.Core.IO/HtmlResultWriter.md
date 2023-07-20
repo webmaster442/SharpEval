@@ -13,8 +13,7 @@ public class HtmlResultWriter : IResultWrtiter
 | [HtmlResultWriter](HtmlResultWriter/HtmlResultWriter.md)() | Creates a new instance of HtmlResultWriter |
 | [Echo](HtmlResultWriter/Echo.md)(…) |  |
 | [Error](HtmlResultWriter/Error.md)(…) |  |
-| [Result](HtmlResultWriter/Result.md)(…) |  |
-| [ResultTable](HtmlResultWriter/ResultTable.md)(…) |  |
+| [Result](HtmlResultWriter/Result.md)(…) |  (3 methods) |
 | override [ToString](HtmlResultWriter/ToString.md)() |  |
 
 ## See Also

@@ -8,6 +8,7 @@
 | class [CommandParser](./SharpEval.Core/CommandParser.md) | The main expression command parser |
 | interface [ICommandReader](./SharpEval.Core/ICommandReader.md) | Command reader decoupling interface for the command parser |
 | interface [IResultWrtiter](./SharpEval.Core/IResultWrtiter.md) | Result writer decoupling interface for the command parser |
+| interface [ISvgImage](./SharpEval.Core/ISvgImage.md) | SVG image interface |
 | interface [ITableRow](./SharpEval.Core/ITableRow.md) | Represents a table row |
 | class [Settings](./SharpEval.Core/Settings.md) | Represents application settings |
 
@@ -16,6 +17,7 @@
 | public type | description |
 | --- | --- |
 | class [Globals](./SharpEval.Core.Internals/Globals.md) | Global functions avaliable in the expressions |
+| class [Plotter](./SharpEval.Core.Internals/Plotter.md) | Allows plotting data series |
 
 ## SharpEval.Core.IO namespace
 

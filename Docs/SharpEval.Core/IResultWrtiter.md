@@ -12,8 +12,7 @@ public interface IResultWrtiter
 | --- | --- |
 | [Echo](IResultWrtiter/Echo.md)(…) | Echoes the command input |
 | [Error](IResultWrtiter/Error.md)(…) | Writes an error message |
-| [Result](IResultWrtiter/Result.md)(…) | Writes result as a string |
-| [ResultTable](IResultWrtiter/ResultTable.md)(…) | Write result that is a table |
+| [Result](IResultWrtiter/Result.md)(…) | Writes result as a string (3 methods) |
 
 ## See Also
 

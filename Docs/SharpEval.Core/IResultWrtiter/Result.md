@@ -1,4 +1,44 @@
-# IResultWrtiter.Result method
+# IResultWrtiter.Result method (1 of 3)
+
+Write result that is a table
+
+```csharp
+public void Result(IEnumerable<ITableRow> tableRows)
+```
+
+| parameter | description |
+| --- | --- |
+| tableRows | table rows |
+
+## See Also
+
+* interface [ITableRow](../ITableRow.md)
+* interface [IResultWrtiter](../IResultWrtiter.md)
+* namespace [SharpEval.Core](../../SharpEval.Core.md)
+
+---
+
+# IResultWrtiter.Result method (2 of 3)
+
+Write a result, that is an SVG image
+
+```csharp
+public void Result(ISvgImage image)
+```
+
+| parameter | description |
+| --- | --- |
+| image | Svg image |
+
+## See Also
+
+* interface [ISvgImage](../ISvgImage.md)
+* interface [IResultWrtiter](../IResultWrtiter.md)
+* namespace [SharpEval.Core](../../SharpEval.Core.md)
+
+---
+
+# IResultWrtiter.Result method (3 of 3)
 
 Writes result as a string
 

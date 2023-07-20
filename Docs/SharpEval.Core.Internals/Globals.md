@@ -45,6 +45,7 @@ public sealed class Globals
 | static [Map](Globals/Map.md)(…) | Re-maps a number from one range to another. That is, a value of fromLow would get mapped to toLow, a value of fromHigh to toHigh, values in-between to values in-between, etc. (2 methods) |
 | static [Max&lt;T&gt;](Globals/Max.md)(…) | Gets the maximum number from a sequence numbers |
 | static [Min&lt;T&gt;](Globals/Min.md)(…) | Gets the Minimum number from a sequence numbers |
+| static [Plotter](Globals/Plotter.md)() | Data plotter |
 | static [Pow](Globals/Pow.md)(…) | Returns a specified number raised to the specified power. (2 methods) |
 | static [Prefix](Globals/Prefix.md)(…) | Apply an Si Prefix to a number (2 methods) |
 | static [Range&lt;T&gt;](Globals/Range.md)(…) | Computes the range of a sequence numbers. The range is the spread of the elements from the lowest to the highest value |

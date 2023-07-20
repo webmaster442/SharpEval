@@ -1,4 +1,32 @@
-# HtmlResultWriter.Result method
+# HtmlResultWriter.Result method (1 of 3)
+
+```csharp
+public void Result(IEnumerable<ITableRow> tableRows)
+```
+
+## See Also
+
+* interface [ITableRow](../../SharpEval.Core/ITableRow.md)
+* class [HtmlResultWriter](../HtmlResultWriter.md)
+* namespace [SharpEval.Core.IO](../../SharpEval.Core.md)
+
+---
+
+# HtmlResultWriter.Result method (2 of 3)
+
+```csharp
+public void Result(ISvgImage image)
+```
+
+## See Also
+
+* interface [ISvgImage](../../SharpEval.Core/ISvgImage.md)
+* class [HtmlResultWriter](../HtmlResultWriter.md)
+* namespace [SharpEval.Core.IO](../../SharpEval.Core.md)
+
+---
+
+# HtmlResultWriter.Result method (3 of 3)
 
 ```csharp
 public void Result(string result)
