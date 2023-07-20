@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Completion;
+
 using SharpEval.Core.Internals;
 using SharpEval.Core.Internals.ResultFormatters;
 
@@ -95,20 +98,7 @@ namespace SharpEval.Core
 
                 if (input.StartsWith('$'))
                 {
-                    try
-                    {
-                        string[] splitted = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                        string command = splitted[0];
-                        var arguments = new Arguments(splitted.Skip(1));
-                        if (_commandTable.ContainsKey(command))
-                            _commandTable[command].Execute(this, arguments);
-                        else
-                            _resultWrtiter.Error($"Unknown command: {command}");
-                    }
-                    catch (Exception ex)
-                    {
-                        _resultWrtiter.Error(ex.Message);
-                    }
+                    RunCommand(input);
                 }
                 else
                 {
@@ -127,31 +117,54 @@ namespace SharpEval.Core
                     }
                     else
                     {
-                        var formatter = _resultFormatters
-                            .FirstOrDefault(f => f.IsTypeMatch(result.ResultData));
-
-                        if (formatter == null)
-                            throw new InvalidOperationException($"Unknown result type: {result.GetType().Name}");
-
-                        if (formatter is SingleLineResultFormatter singleLineFormatter)
-                        {
-                            string resultString = singleLineFormatter.GetString(result.ResultData, Settings.CurrentAngleSystem);
-                            _resultWrtiter.Result(resultString);
-                        }
-                        else if (formatter is TableResultFormatter tableResultFormatter)
-                        {
-                            var rows = tableResultFormatter.ToTable(result.ResultData, Settings.CurrentAngleSystem);
-                            _resultWrtiter.Result(rows);
-                        }
-                        else
-                        {
-                            throw new UnreachableException($"Unknown formatter type: {formatter.GetType().Name}");
-                        }
+                        PrintResult(result);
                     }
                 }
 
                 if (_exitFlag)
                     return;
+            }
+        }
+
+        private void PrintResult(EvaluatorResult result)
+        {
+            var formatter = _resultFormatters
+                .FirstOrDefault(f => f.IsTypeMatch(result.ResultData));
+
+            if (formatter == null)
+                throw new InvalidOperationException($"Unknown result type: {result.GetType().Name}");
+
+            if (formatter is SingleLineResultFormatter singleLineFormatter)
+            {
+                string resultString = singleLineFormatter.GetString(result.ResultData, Settings.CurrentAngleSystem);
+                _resultWrtiter.Result(resultString);
+            }
+            else if (formatter is TableResultFormatter tableResultFormatter)
+            {
+                var rows = tableResultFormatter.ToTable(result.ResultData, Settings.CurrentAngleSystem);
+                _resultWrtiter.Result(rows);
+            }
+            else
+            {
+                throw new UnreachableException($"Unknown formatter type: {formatter.GetType().Name}");
+            }
+        }
+
+        private void RunCommand(string input)
+        {
+            try
+            {
+                string[] splitted = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                string command = splitted[0];
+                var arguments = new Arguments(splitted.Skip(1));
+                if (_commandTable.ContainsKey(command))
+                    _commandTable[command].Execute(this, arguments);
+                else
+                    _resultWrtiter.Error($"Unknown command: {command}");
+            }
+            catch (Exception ex)
+            {
+                _resultWrtiter.Error(ex.Message);
             }
         }
     }
