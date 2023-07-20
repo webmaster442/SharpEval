@@ -20,7 +20,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.6.0" />
         <PackageReference Include="System.IO.Hashing" Version="7.0.0" />
-        <PackageReference Include="UnitsNet" Version="5.21.0" />
+        <PackageReference Include="UnitsNet" Version="5.26.0" />
     </ItemGroup>
 
     <ItemGroup>
