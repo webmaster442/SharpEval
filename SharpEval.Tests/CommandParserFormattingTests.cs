@@ -36,7 +36,7 @@ namespace SharpEval.Tests
             _output = result;
         }
 
-        public void ResultTable(IEnumerable<ITableRow> tableRows)
+        public void Result(IEnumerable<ITableRow> tableRows)
         {
         }
 

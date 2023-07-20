@@ -37,7 +37,7 @@ namespace SharpEval.Core.IO
         }
 
         /// <inheritdoc/>
-        public void ResultTable(IEnumerable<ITableRow> tableRows)
+        public void Result(IEnumerable<ITableRow> tableRows)
         {
             _buffer.Append("<table>");
             foreach (ITableRow row in tableRows)

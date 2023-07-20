@@ -21,7 +21,7 @@ namespace SharpEval
             AnsiConsole.MarkupLine($"[green italic]{result}[/]");
         }
 
-        public void ResultTable(IEnumerable<ITableRow> tableRows)
+        public void Result(IEnumerable<ITableRow> tableRows)
         {
             var table = new Table();
             foreach (var row in tableRows)

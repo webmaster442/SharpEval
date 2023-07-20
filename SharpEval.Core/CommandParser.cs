@@ -137,7 +137,7 @@ namespace SharpEval.Core
                         else if (formatter is TableResultFormatter tableResultFormatter)
                         {
                             var rows = tableResultFormatter.ToTable(result.ResultData, Settings.CurrentAngleSystem);
-                            _resultWrtiter.ResultTable(rows);
+                            _resultWrtiter.Result(rows);
                         }
                         else
                         {

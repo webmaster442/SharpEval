@@ -26,6 +26,6 @@
         /// Write result that is a table
         /// </summary>
         /// <param name="tableRows">table rows</param>
-        void ResultTable(IEnumerable<ITableRow> tableRows);
+        void Result(IEnumerable<ITableRow> tableRows);
     }
 }
