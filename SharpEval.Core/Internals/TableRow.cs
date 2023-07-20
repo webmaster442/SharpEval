@@ -28,7 +28,7 @@ internal sealed class TableRow : ITableRow
 
         var ziped = Columns.Zip(other.Columns);
 
-        foreach (var item in ziped) 
+        foreach (var item in ziped)
         {
             if (item.First != item.Second) return false;
         }
@@ -40,7 +40,7 @@ internal sealed class TableRow : ITableRow
     public override int GetHashCode()
     {
         HashCode hash = new();
-        foreach (var item in _items) 
+        foreach (var item in _items)
         {
             hash.Add(item);
         }

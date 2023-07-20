@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 
-using Microsoft.CodeAnalysis.Scripting.Hosting;
-
 using SharpEval.Core.Internals;
 using SharpEval.Core.Internals.ResultFormatters;
 
@@ -30,7 +28,7 @@ namespace SharpEval.Core
 
         Evaluator ICommandHost.Evaluator => _evaluator;
 
-        bool ICommandHost.ExitFlag 
+        bool ICommandHost.ExitFlag
         {
             get => _exitFlag;
             set => _exitFlag = value;

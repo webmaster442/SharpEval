@@ -18,7 +18,7 @@
             _lines = lines;
         }
 
-        public IEnumerable<string> InputLines 
+        public IEnumerable<string> InputLines
             => _lines;
     }
 }

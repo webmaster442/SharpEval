@@ -51,11 +51,11 @@ namespace SharpEval.Core.IO
             {
                 int genericIndex = Array.IndexOf(genericTypes,
                                                  x.ParameterType.IsArray
-                                                 ? x.ParameterType.GetElementType() 
+                                                 ? x.ParameterType.GetElementType()
                                                  : x.ParameterType);
                 if (genericIndex != -1)
                 {
-                    return x.ParameterType.IsArray 
+                    return x.ParameterType.IsArray
                         ? $"``{genericIndex}[]"
                         : $"``{genericIndex}";
                 }
@@ -66,7 +66,7 @@ namespace SharpEval.Core.IO
                 Regex.Replace(methodInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + "." + methodInfo.Name +
                 (genericParameterCounts > 0 ? "``" + genericParameterCounts : string.Empty) +
                 (parameterInfos.Length > 0 ? "(" + string.Join(",", pars) + ")" : string.Empty);
-            
+
             if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 
@@ -83,7 +83,7 @@ namespace SharpEval.Core.IO
             string key = "M:" +
                 Regex.Replace(constructorInfo.DeclaringType?.FullName ?? string.Empty, @"\[.*\]", string.Empty).Replace('+', '.') + ".#ctor" +
                 (parameterInfos.Length > 0 ? "(" + string.Join(",", parameterInfos.Select(x => x.ParameterType.ToString())) + ")" : string.Empty);
-            
+
             if (LoadedXmlDocumentation.TryGetValue(key, out string? documentation))
                 return documentation;
 

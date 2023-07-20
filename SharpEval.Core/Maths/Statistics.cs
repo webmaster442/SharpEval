@@ -36,7 +36,7 @@ namespace SharpEval.Core.Maths
             return result;
         }
 
-        public static double Average<T>(params T[] items) where T: INumber<T>
+        public static double Average<T>(params T[] items) where T : INumber<T>
         {
             return Convert.ToDouble(Sum(items)) / items.Length;
         }

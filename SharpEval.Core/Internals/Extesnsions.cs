@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 
 using Microsoft.CodeAnalysis.Scripting;
 
@@ -22,7 +21,7 @@ namespace SharpEval.Core.Internals
         public static IReadOnlyDictionary<string, object> VariablesToDictionary(this ImmutableArray<ScriptVariable> variables)
         {
             Dictionary<string, object> result = new();
-            foreach (var variable in variables) 
+            foreach (var variable in variables)
             {
                 if (result.ContainsKey(variable.Name))
                     result[variable.Name] = variable.Value;

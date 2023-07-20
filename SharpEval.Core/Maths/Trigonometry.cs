@@ -30,7 +30,7 @@ namespace SharpEval.Core.Maths
                 case AngleSystem.Rad:
                     return radians;
                 case AngleSystem.Deg:
-                     return radians * (180 / Math.PI);;
+                    return radians * (180 / Math.PI); ;
                 case AngleSystem.Grad:
                     return radians * (200 / Math.PI);
                 default:

@@ -106,7 +106,7 @@
                 double multiplier = Math.Pow(10, entry.Value);
                 if (value < multiplier) continue;
 
-                double number =  value / multiplier;
+                double number = value / multiplier;
                 Si prefix = Enum.Parse<Si>(entry.Name);
 
                 return (number, prefix);

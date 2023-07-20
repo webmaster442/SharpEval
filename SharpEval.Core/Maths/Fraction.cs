@@ -33,7 +33,7 @@ namespace SharpEval.Core.Maths
 
         /// <inheritdoc/>
         public static Fraction AdditiveIdentity => new(0, 1);
-        
+
         /// <inheritdoc/>
         public static Fraction MultiplicativeIdentity => new(1, 1);
 
@@ -63,7 +63,7 @@ namespace SharpEval.Core.Maths
 
         private void Simplify()
         {
-            if ((Numerator < 0 && Denominator < 0) 
+            if ((Numerator < 0 && Denominator < 0)
                 || Denominator < 0)
             {
                 Numerator = -Numerator;
@@ -128,7 +128,7 @@ namespace SharpEval.Core.Maths
             }
             catch (Exception ex)
             {
-                throw new FormatException("Invalid format" ,ex);
+                throw new FormatException("Invalid format", ex);
             }
         }
 
@@ -238,7 +238,7 @@ namespace SharpEval.Core.Maths
         /// Create a fraction from a long value
         /// </summary>
         /// <param name="number">number</param>
-        public static implicit operator Fraction (long number)
+        public static implicit operator Fraction(long number)
         {
             return new Fraction(number, 1);
         }

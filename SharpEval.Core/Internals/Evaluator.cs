@@ -43,9 +43,9 @@ internal sealed class Evaluator
     {
         get
         {
-            return 
-                _state == null 
-                ? new Dictionary<string, object>() 
+            return
+                _state == null
+                ? new Dictionary<string, object>()
                 : _state.Variables.VariablesToDictionary();
         }
     }
@@ -86,7 +86,7 @@ internal sealed class Evaluator
         catch (Exception ex)
         {
             return new EvaluatorResult
-            { 
+            {
                 Error = ex.Message,
                 ResultData = null,
             };

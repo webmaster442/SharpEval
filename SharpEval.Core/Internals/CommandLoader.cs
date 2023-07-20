@@ -10,8 +10,8 @@
 
             IEnumerable<Type> types = cmdInterface.Assembly
                 .GetTypes()
-                .Where(type => type.IsAssignableTo(cmdInterface) 
-                       && !type.IsInterface 
+                .Where(type => type.IsAssignableTo(cmdInterface)
+                       && !type.IsInterface
                        && !type.IsAbstract);
 
             foreach (Type type in types)

@@ -13,7 +13,7 @@ namespace SharpEval.Core.IO
         /// <summary>
         /// Creates a new instance of HtmlResultWriter
         /// </summary>
-        public HtmlResultWriter() 
+        public HtmlResultWriter()
         {
             _buffer = new(1024);
         }
@@ -43,7 +43,7 @@ namespace SharpEval.Core.IO
             foreach (ITableRow row in tableRows)
             {
                 _buffer.Append("<tr>");
-                foreach (var column in row.Columns) 
+                foreach (var column in row.Columns)
                 {
                     _buffer.AppendFormat("<td>{0}</td>", column);
                 }

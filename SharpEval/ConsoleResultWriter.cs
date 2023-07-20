@@ -24,7 +24,7 @@ namespace SharpEval
         public void ResultTable(IEnumerable<ITableRow> tableRows)
         {
             var table = new Table();
-            foreach (var row in tableRows) 
+            foreach (var row in tableRows)
             {
                 var columnData = row.Columns.ToArray();
                 table.AddRow(columnData);

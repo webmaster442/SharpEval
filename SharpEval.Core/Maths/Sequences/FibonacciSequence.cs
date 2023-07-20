@@ -6,9 +6,9 @@
     public sealed class FibonacciSequence : NumberSequenceBase
     {
         /// <inheritdoc/>
-        public override long Minimum 
+        public override long Minimum
         {
-            get => 0; 
+            get => 0;
             set => throw new NotSupportedException("Can't change minumum");
         }
 

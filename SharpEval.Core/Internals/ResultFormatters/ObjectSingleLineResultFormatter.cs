@@ -6,7 +6,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
     {
         public override bool IsTypeMatch(object? o)
         {
-            return o is not null && 
+            return o is not null &&
                 o.GetType().GetMethod(nameof(ToString))?.DeclaringType != typeof(object);
         }
 

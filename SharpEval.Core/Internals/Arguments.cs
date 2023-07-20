@@ -20,7 +20,7 @@
             return (T)Convert.ChangeType(_arguments[index], typeof(T));
         }
 
-        internal T GetEnum<T>(int index) where T: struct, Enum
+        internal T GetEnum<T>(int index) where T : struct, Enum
         {
             return Enum.Parse<T>(_arguments[index], true);
         }

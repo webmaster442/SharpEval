@@ -12,7 +12,7 @@ public sealed class Globals
 {
     private readonly ISettingsProvider _settingsProvider;
     private readonly UnitConversion _unitConversion;
-    
+
     internal Random RandomGenerator { get; set; }
 
     internal Globals(ISettingsProvider settingsProvider)
@@ -157,7 +157,7 @@ public sealed class Globals
     /// </summary>
     /// <param name="number">The number whose factorial is to be found</param>
     /// <returns>The factorial of the number.</returns>
-    public static long Factorial(byte number) 
+    public static long Factorial(byte number)
         => GeneralMath.Factorial(number);
 
     /// <summary>

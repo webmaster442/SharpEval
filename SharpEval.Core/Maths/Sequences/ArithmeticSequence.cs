@@ -17,7 +17,7 @@
         /// <inheritdoc/>
         public override long Minimum
         {
-            get; 
+            get;
             set;
         }
 
