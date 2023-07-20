@@ -1,6 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
+
+using Microsoft.CodeAnalysis.Scripting.Hosting;
 
 using SharpEval.Core.Internals;
+using SharpEval.Core.Internals.ResultFormatters;
 
 namespace SharpEval.Core
 {
@@ -13,6 +17,9 @@ namespace SharpEval.Core
         private readonly IResultWrtiter _resultWrtiter;
         private readonly Evaluator _evaluator;
         private readonly Dictionary<string, ICommand> _commandTable;
+        private readonly ResultFormatter[] _resultFormatters;
+
+
 
         private bool _exitFlag;
 
@@ -50,6 +57,14 @@ namespace SharpEval.Core
             _resultWrtiter = resultWrtiter;
             _commandTable = CommandLoader.LoadCommands();
             _evaluator.OnReset += EvaluatorOnReset;
+            _resultFormatters = new ResultFormatter[]
+            {
+                new NullSingleLineResultFormatter(),
+                new EnumerableTableResultFormatter(),
+                new FormattableSingleLineResultFormatter(),
+                new ObjectSingleLineResultFormatter(),
+                new ObjectTableResultFormatter(),
+            };
         }
 
         /// <summary>
@@ -110,19 +125,25 @@ namespace SharpEval.Core
                     }
                     else
                     {
-                        switch (result.ResultTypeInformation)
-                        {
-                            case EvaluatorResult.ResultType.Null:
-                                break;
-                            case EvaluatorResult.ResultType.Table:
-                                _resultWrtiter.ResultTable(result.ToTable());
-                                break;
-                            case EvaluatorResult.ResultType.SingleLine:
-                                _resultWrtiter.Result(result.ToString());
-                                break;
-                            default:
-                                throw new UnreachableException("Unknown result type");
+                        var formatter = _resultFormatters
+                            .FirstOrDefault(f => f.IsTypeMatch(result.ResultData));
 
+                        if (formatter == null)
+                            throw new InvalidOperationException($"Unknown result type: {result.GetType().Name}");
+
+                        if (formatter is SingleLineResultFormatter singleLineFormatter)
+                        {
+                            string resultString = singleLineFormatter.GetString(result.ResultData, CultureInfo.InvariantCulture);
+                            _resultWrtiter.Result(resultString);
+                        }
+                        else if (formatter is TableResultFormatter tableResultFormatter)
+                        {
+                            var rows = tableResultFormatter.ToTable(result.ResultData, CultureInfo.InvariantCulture);
+                            _resultWrtiter.ResultTable(rows);
+                        }
+                        else
+                        {
+                            throw new UnreachableException($"Unknown formatter type: {formatter.GetType().Name}");
                         }
                     }
                 }

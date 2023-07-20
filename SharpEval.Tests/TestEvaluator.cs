@@ -111,7 +111,7 @@ internal class TestEvaluator
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);
-        if (!string.IsNullOrEmpty(result.Error)) 
+        if (!string.IsNullOrEmpty(result.Error))
         {
             Assert.Fail(result.Error);
         }
@@ -139,7 +139,7 @@ internal class TestEvaluator
         Assert.That(_sut.Variables.Count, Is.EqualTo(0));
     }
 
-   [Test]
+    [Test]
     public async Task EnsureThat_Evaluator_EvaluateAsync_CanCreateVariables()
     {
         await _sut.EvaluateAsync("var foo = 42");
@@ -151,22 +151,13 @@ internal class TestEvaluator
         });
     }
 
-    [TestCase("string x = null", EvaluatorResult.ResultType.Null)]
-    [TestCase("3+2", EvaluatorResult.ResultType.SingleLine)]
-    [TestCase("new int[1, 2, 3]", EvaluatorResult.ResultType.Table)]
-    public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsCorrectTypeInformation(string input, EvaluatorResult.ResultType resultType)
-    {
-        var result = await _sut.EvaluateAsync(input);
-        Assert.That(result.ResultTypeInformation, Is.EqualTo(resultType));
-    }
-
     [Test]
     public async Task EnsureThat_Evaluator_Reset_ClearsState()
     {
         int variableCount = 0;
         await _sut.EvaluateAsync("var foo = 42");
         variableCount += 1;
-        
+
         _sut.Reset();
         variableCount = _sut.Variables.Count;
 
