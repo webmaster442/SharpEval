@@ -53,6 +53,14 @@ namespace SharpEval.Core.IO
         }
 
         /// <inheritdoc/>
+        public void Result(ISvgImage image)
+        {
+            _buffer.Append("<figure>");
+            _buffer.Append(image.Data);
+            _buffer.Append("</figure>");
+        }
+
+        /// <inheritdoc/>
         public override string ToString()
         {
             return _buffer.ToString();

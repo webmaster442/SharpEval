@@ -31,5 +31,21 @@ namespace SharpEval
             }
             AnsiConsole.Write(table);
         }
+
+        public void Result(ISvgImage image)
+        {
+            var name = $"plot_{DateTime.Now.ToBinary()}.svg";
+            var fullName = Path.Combine(Environment.CurrentDirectory, name);
+
+            File.WriteAllText(fullName, image.Data);
+
+
+            using (var process = new System.Diagnostics.Process())
+            {
+                process.StartInfo.FileName = fullName;
+                process.StartInfo.UseShellExecute = true;
+                process.Start();
+            }
+        }
     }
 }

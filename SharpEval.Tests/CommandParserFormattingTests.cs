@@ -40,6 +40,11 @@ namespace SharpEval.Tests
         {
         }
 
+        public void Result(ISvgImage image)
+        {
+            _output = image.Data;
+        }
+
         [SetUp]
         public void Setup()
         {

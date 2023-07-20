@@ -27,5 +27,11 @@
         /// </summary>
         /// <param name="tableRows">table rows</param>
         void Result(IEnumerable<ITableRow> tableRows);
+
+        /// <summary>
+        /// Write a result, that is an SVG image
+        /// </summary>
+        /// <param name="image">Svg image</param>
+        void Result(ISvgImage image);
     }
 }
