@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Numerics;
+using System.Xml.Serialization;
 
 using SharpEval.Core.Maths;
 
@@ -538,4 +539,23 @@ public sealed class Globals
     /// <returns>An SVG Image</returns>
     public ISvgImage PlotPrint()
         => _plotter.Plot();
+
+    /// <summary>
+    /// Creates a new Vector
+    /// </summary>
+    /// <param name="x">x value</param>
+    /// <param name="y">y value</param>
+    /// <returns>a new 2 dimensional vector</returns>
+    public Vector2 Vector(float x, float y)
+        => new Vector2(x, y);
+
+    /// <summary>
+    /// Creates a new Vector
+    /// </summary>
+    /// <param name="x">x value</param>
+    /// <param name="y">y value</param>
+    /// <param name="z">z value</param>
+    /// <returns>a new 3 dimensional vector</returns>
+    public Vector3 Vector(float x, float y, float z)
+        => new Vector3(x, y, z);
 }
