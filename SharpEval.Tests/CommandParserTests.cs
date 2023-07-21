@@ -1,5 +1,7 @@
 ﻿using Moq;
 
+using SharpEval.Webservices;
+
 namespace SharpEval.Tests
 {
     [TestFixture]
@@ -7,6 +9,7 @@ namespace SharpEval.Tests
     {
         private Mock<ICommandReader> _commandReaderMock;
         private Mock<IResultWrtiter> _resultWriterMock;
+        private Mock<IApiClient> _apiClientMock;
         private CommandParser _sut;
         private List<string> _commands;
 
@@ -16,13 +19,14 @@ namespace SharpEval.Tests
         {
             _commandReaderMock = new Mock<ICommandReader>(MockBehavior.Strict);
             _resultWriterMock = new Mock<IResultWrtiter>(MockBehavior.Strict);
+            _apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
             _commands = new List<string>();
             _commandReaderMock.SetupGet(x => x.InputLines).Returns(_commands);
             _resultWriterMock.Setup(x => x.Result(It.IsAny<string>()));
             _resultWriterMock.Setup(x => x.Error(It.IsAny<string>()));
             _resultWriterMock.Setup(x => x.Echo(It.IsAny<AngleSystem>(), It.IsAny<string>()));
 
-            _sut = new CommandParser(_commandReaderMock.Object, _resultWriterMock.Object);
+            _sut = new CommandParser(_commandReaderMock.Object, _resultWriterMock.Object, _apiClientMock.Object);
         }
 
         [Test]

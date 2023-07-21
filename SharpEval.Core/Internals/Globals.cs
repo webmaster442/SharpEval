@@ -2,6 +2,7 @@
 using System.Numerics;
 
 using SharpEval.Core.Maths;
+using SharpEval.Webservices;
 
 namespace SharpEval.Core.Internals;
 
@@ -11,14 +12,16 @@ namespace SharpEval.Core.Internals;
 public sealed class Globals
 {
     private readonly ISettingsProvider _settingsProvider;
+    private readonly ApiAdapter _apiAdapter;
     private readonly UnitConversion _unitConversion;
     private readonly Plotter _plotter;
 
     internal Random RandomGenerator { get; set; }
 
-    internal Globals(ISettingsProvider settingsProvider)
+    internal Globals(ISettingsProvider settingsProvider, ApiAdapter apiAdapter)
     {
         _settingsProvider = settingsProvider;
+        _apiAdapter = apiAdapter;
         _plotter = new Plotter();
         _unitConversion = new UnitConversion(CultureInfo.InvariantCulture);
         RandomGenerator = new Random();
@@ -575,4 +578,14 @@ public sealed class Globals
     /// <returns>a new 3 dimensional vector</returns>
     public Vector3 Vector(float x, float y, float z)
         => new Vector3(x, y, z);
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="ammount"></param>
+    /// <param name="from"></param>
+    /// <param name="to"></param>
+    /// <returns></returns>
+    public double Exchange(double ammount, string from, string to)
+        => _apiAdapter.GetExchange(ammount, from, to);
 }

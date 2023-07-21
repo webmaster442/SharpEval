@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Moq;
+
+using SharpEval.Webservices;
+
 namespace SharpEval.Tests
 {
     internal class CommandParserFormattingTests : ICommandReader, IResultWrtiter
@@ -11,6 +15,7 @@ namespace SharpEval.Tests
         private string _intutBuffer;
         private string _output;
         private CommandParser _sut;
+        private Mock<IApiClient> _apiClientMock;
 
         public IEnumerable<string> InputLines
         {
@@ -48,8 +53,9 @@ namespace SharpEval.Tests
         [SetUp]
         public void Setup()
         {
+            _apiClientMock = new Mock<IApiClient>();
             _intutBuffer = string.Empty;
-            _sut = new CommandParser(this, this);
+            _sut = new CommandParser(this, this, _apiClientMock.Object);
         }
 
         [TestCase("", "")]

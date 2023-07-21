@@ -5,6 +5,7 @@ using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 
 using SharpEval.Core.Maths;
+using SharpEval.Webservices;
 
 namespace SharpEval.Core.Internals;
 
@@ -21,7 +22,7 @@ internal sealed class Evaluator
         _globals.RandomGenerator = new Random(seed);
     }
 
-    public Evaluator(ISettingsProvider settingsProvider)
+    public Evaluator(ISettingsProvider settingsProvider, IApiClient apiClient)
     {
         _options = ScriptOptions.Default
             .WithFileEncoding(Encoding.UTF8)
@@ -36,7 +37,7 @@ internal sealed class Evaluator
                          "System.Collections",
                          "SharpEval.Core.Maths");
         _state = null;
-        _globals = new Globals(settingsProvider);
+        _globals = new Globals(settingsProvider, new ApiAdapter(apiClient));
     }
 
     public IReadOnlyDictionary<string, object> Variables
@@ -85,11 +86,19 @@ internal sealed class Evaluator
         }
         catch (Exception ex)
         {
+#if DEBUG
+            return new EvaluatorResult
+            {
+                Error = $"{ex.Message}\r\nTrace:\r\n{ex.StackTrace}",
+                ResultData = null,
+            };
+#else
             return new EvaluatorResult
             {
                 Error = ex.Message,
                 ResultData = null,
             };
+#endif
         }
     }
 

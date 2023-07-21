@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis;
 
 using SharpEval.Core.Internals;
 using SharpEval.Core.Internals.ResultFormatters;
+using SharpEval.Webservices;
 
 namespace SharpEval.Core
 {
@@ -44,12 +45,13 @@ namespace SharpEval.Core
         /// </summary>
         /// <param name="commandReader">Command reader abstraction</param>
         /// <param name="resultWrtiter">Result writer abstraction</param>
+        /// <param name="apiClient">API client abstraction</param>
         /// <seealso cref="ICommandReader"/>
         /// <seealso cref="IResultWrtiter"/>
-        public CommandParser(ICommandReader commandReader, IResultWrtiter resultWrtiter)
+        public CommandParser(ICommandReader commandReader, IResultWrtiter resultWrtiter, IApiClient apiClient)
         {
             Settings = new Settings();
-            _evaluator = new Evaluator(this);
+            _evaluator = new Evaluator(this, apiClient);
             _commandReader = commandReader;
             _resultWrtiter = resultWrtiter;
             _commandTable = CommandLoader.LoadCommands();

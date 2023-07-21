@@ -8,7 +8,7 @@ namespace SharpEval.Webservices
 {
     public sealed class ApiClient : IApiClient
     {
-        private readonly Dictionary<Uri, CacheEntry> _cache;
+        private readonly Dictionary<string, CacheEntry> _cache;
         private readonly JsonSerializerOptions _jsonOptions;
         private readonly string _cacheFile;
 
@@ -25,7 +25,7 @@ namespace SharpEval.Webservices
             _cache = LoadCache();
         }
 
-        private Dictionary<Uri, CacheEntry> LoadCache()
+        private Dictionary<string, CacheEntry> LoadCache()
         {
             if (File.Exists(_cacheFile))
             {
@@ -33,7 +33,7 @@ namespace SharpEval.Webservices
                 {
                     try
                     {
-                        var deserialized = JsonSerializer.Deserialize<Dictionary<Uri, CacheEntry>>(file, _jsonOptions);
+                        var deserialized = JsonSerializer.Deserialize<Dictionary<string, CacheEntry>>(file, _jsonOptions);
                         if (deserialized != null)
                         {
                             return deserialized;
@@ -41,14 +41,14 @@ namespace SharpEval.Webservices
                     }
                     catch (Exception) 
                     {
-                        return new Dictionary<Uri, CacheEntry>();
+                        return new Dictionary<string, CacheEntry>();
                     }
                 }
             }
-            return new Dictionary<Uri, CacheEntry>();
+            return new Dictionary<string, CacheEntry>();
         }
 
-        private void UpdateCache(Uri uri, string result, DateTime endDate)
+        private void UpdateCache(string uri, string result, DateTime endDate)
         {
             _cache[uri] = new CacheEntry(result, endDate);
             using (var file = File.Create(_cacheFile))
@@ -57,7 +57,7 @@ namespace SharpEval.Webservices
             }
         }
 
-        private async ValueTask<string> CallEndpoint(Uri endpoint, TimeSpan validityRange)
+        private async ValueTask<string> CallEndpoint(string endpoint, TimeSpan validityRange)
         {
             using (var client = new HttpClient())
             {
@@ -75,7 +75,7 @@ namespace SharpEval.Webservices
 
         public async Task<Ecb.Envelope> GetCurrencyRates()
         {
-            string xml = await CallEndpoint(new Uri(Endpoints.EcbEndpoint), TimeSpan.FromHours(24));
+            string xml = await CallEndpoint(Endpoints.EcbEndpoint, TimeSpan.FromHours(24));
             XmlSerializer xs = new(typeof(Envelope));
             using (XmlReader xmlReader = new XmlTextReader(xml))
             {

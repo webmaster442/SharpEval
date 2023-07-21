@@ -3,6 +3,7 @@
 using Moq;
 
 using SharpEval.Core.Internals;
+using SharpEval.Webservices;
 
 namespace SharpEval.Tests;
 
@@ -11,6 +12,7 @@ internal class TestEvaluator
 {
     private Evaluator _sut;
     private Mock<ISettingsProvider> _settingProviderMock;
+    private Mock<IApiClient> _apiClientMock;
     private Settings _settings;
 
     [SetUp]
@@ -21,8 +23,9 @@ internal class TestEvaluator
             CurrentAngleSystem = AngleSystem.Deg,
         };
         _settingProviderMock = new Mock<ISettingsProvider>(MockBehavior.Strict);
+        _apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
         _settingProviderMock.Setup(x => x.GetSettings()).Returns(_settings);
-        _sut = new Evaluator(_settingProviderMock.Object);
+        _sut = new Evaluator(_settingProviderMock.Object, _apiClientMock.Object);
         _sut.SetRandomSeed(4);
     }
 
