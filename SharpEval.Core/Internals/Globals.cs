@@ -1,6 +1,5 @@
 ﻿using System.Globalization;
 using System.Numerics;
-using System.Xml.Serialization;
 
 using SharpEval.Core.Maths;
 

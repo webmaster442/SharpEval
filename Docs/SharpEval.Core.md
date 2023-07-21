@@ -17,7 +17,6 @@
 | public type | description |
 | --- | --- |
 | class [Globals](./SharpEval.Core.Internals/Globals.md) | Global functions avaliable in the expressions |
-| class [Plotter](./SharpEval.Core.Internals/Plotter.md) | Allows plotting data series |
 
 ## SharpEval.Core.IO namespace
 

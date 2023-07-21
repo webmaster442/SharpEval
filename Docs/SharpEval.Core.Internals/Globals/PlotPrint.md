@@ -1,14 +1,18 @@
-# Globals.Plotter method
+# Globals.PlotPrint method
 
-Data plotter
+Print the plot
 
 ```csharp
-public static Plotter Plotter()
+public ISvgImage PlotPrint()
 ```
+
+## Return Value
+
+An SVG Image
 
 ## See Also
 
-* class [Plotter](../Plotter.md)
+* interface [ISvgImage](../../SharpEval.Core/ISvgImage.md)
 * class [Globals](../Globals.md)
 * namespace [SharpEval.Core.Internals](../../SharpEval.Core.md)
 
