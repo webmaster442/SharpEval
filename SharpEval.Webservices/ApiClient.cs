@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -76,11 +77,20 @@ namespace SharpEval.Webservices
         public async Task<Ecb.Envelope> GetCurrencyRates()
         {
             string xml = await CallEndpoint(Endpoints.EcbEndpoint, TimeSpan.FromHours(24));
-            XmlSerializer xs = new(typeof(Envelope));
-            using (XmlReader xmlReader = new XmlTextReader(xml))
+            return DeserializeXml<Ecb.Envelope>(xml);
+        }
+
+        private static T DeserializeXml<T>(string xml) where T : class
+        {
+            XmlSerializer xs = new(typeof(T));
+
+            using (StringReader reader = new StringReader(xml))
             {
-                return xs.Deserialize(xmlReader) as Ecb.Envelope
-                    ?? throw new InvalidOperationException("Can't deserialize response");
+                using (XmlReader xmlReader = XmlReader.Create(reader))
+                {
+                    return xs.Deserialize(xmlReader) as T
+                        ?? throw new InvalidOperationException("Can't deserialize response");
+                }
             }
         }
     }

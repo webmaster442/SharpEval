@@ -13,7 +13,7 @@ namespace SharpEval
 
         public void Error(string message)
         {
-            AnsiConsole.MarkupLine($"[bold red]{message}[/]");
+            AnsiConsole.MarkupLine($"[bold red]{message.EscapeMarkup()}[/]");
         }
 
         public void Result(string result)

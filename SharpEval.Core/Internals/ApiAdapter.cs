@@ -18,6 +18,7 @@ namespace SharpEval.Core.Internals
                 throw new InvalidOperationException("Api returned no data");
 
             var exchangeTable = rates.Cube.Cubes.Cube.ToDictionary(x => x.Currency, x => (double)x.Rate, StringComparer.OrdinalIgnoreCase);
+            exchangeTable.Add("EUR", 1d);
 
             if (!exchangeTable.ContainsKey(from))
                 throw new InvalidOperationException($"Unknown currency: {from} Valid currencies: {string.Join(',', exchangeTable.Keys)}");
