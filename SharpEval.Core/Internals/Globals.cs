@@ -12,12 +12,14 @@ public sealed class Globals
 {
     private readonly ISettingsProvider _settingsProvider;
     private readonly UnitConversion _unitConversion;
+    private readonly Plotter _plotter;
 
     internal Random RandomGenerator { get; set; }
 
     internal Globals(ISettingsProvider settingsProvider)
     {
         _settingsProvider = settingsProvider;
+        _plotter = new Plotter();
         _unitConversion = new UnitConversion(CultureInfo.InvariantCulture);
         RandomGenerator = new Random();
     }
@@ -39,12 +41,6 @@ public sealed class Globals
     /// Represents the natural logarithmic base, specified by the constant, e.
     /// </summary>
     public static double E => Math.E;
-
-    /// <summary>
-    /// Data plotter 
-    /// </summary>
-    /// <seealso cref="Plotter"/>
-    public static Plotter Plotter() => new Plotter();
 
     /// <summary>
     /// Returns the absolute value of a double-precision floating-point number.
@@ -495,4 +491,51 @@ public sealed class Globals
     /// <returns>A date representing given values</returns>
     public static DateTime Date(int year, int month, int day, int hour = 0, int minute = 0, int second = 0)
         => new DateTime(year, month, day, hour, minute, second);
+
+    /// <summary>
+    /// Reset plot to defaults
+    /// </summary>
+    public void PlotReset()
+        => _plotter.Reset();
+
+    /// <summary>
+    /// Plot a function
+    /// </summary>
+    /// <param name="function">Function to plot</param>
+    /// <param name="start">start point for the plot</param>
+    /// <param name="end">end point for the plot</param>
+    /// <param name="step">step size</param>
+    /// <param name="title">Title to associate to function</param>
+    public void PlotFunction(Func<double, double> function, double start, double end, double step, string title)
+        => _plotter.Function(function, start, end, step, title);
+
+    /// <summary>
+    /// Set plot title
+    /// </summary>
+    /// <param name="title">plot title to use</param>
+    public void PlotTitle(string title)
+        => _plotter.Title(title);
+
+    /// <summary>
+    /// Set plot background from a hex code
+    /// Default is #ffffff
+    /// </summary>
+    /// <param name="hexColor">color to use. E.g: #c0c0c0</param>
+    public void PlotBackground(string hexColor)
+        => _plotter.Background(hexColor);
+
+    /// <summary>
+    /// Set plot area width and height in pixels
+    /// </summary>
+    /// <param name="width">Plot width</param>
+    /// <param name="height">Plot height</param>
+    public void PlotSize(int width, int height)
+        => _plotter.Size(width, height);
+
+    /// <summary>
+    /// Print the plot
+    /// </summary>
+    /// <returns>An SVG Image</returns>
+    public ISvgImage PlotPrint()
+        => _plotter.Plot();
 }

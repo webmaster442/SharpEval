@@ -34,7 +34,7 @@ namespace SharpEval
 
         public void Result(ISvgImage image)
         {
-            var name = $"plot_{DateTime.Now.ToBinary()}.svg";
+            var name = $"plot_{DateTime.Now.Year}_{DateTime.Now.Month}_{DateTime.Now.Day}_{DateTime.Now.Hour}_{DateTime.Now.Minute}_{DateTime.Now.Second}.svg";
             var fullName = Path.Combine(Environment.CurrentDirectory, name);
 
             File.WriteAllText(fullName, image.Data);
