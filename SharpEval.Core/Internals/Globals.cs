@@ -362,6 +362,16 @@ public sealed class Globals
     }
 
     /// <summary>
+    /// Creates a complex number from a 2d vector
+    /// </summary>
+    /// <param name="vector">vector to use</param>
+    /// <returns>a complex number</returns>
+    public static Complex Complex(Vector2 vector)
+    {
+        return new Complex(vector.X, vector.Y);
+    }
+
+    /// <summary>
     /// Computes the reciprocal of a value.
     /// </summary>
     /// <typeparam name="T">Type</typeparam>
@@ -541,7 +551,7 @@ public sealed class Globals
         => _plotter.Plot();
 
     /// <summary>
-    /// Creates a new Vector
+    /// Creates a Vector
     /// </summary>
     /// <param name="x">x value</param>
     /// <param name="y">y value</param>
@@ -550,7 +560,15 @@ public sealed class Globals
         => new Vector2(x, y);
 
     /// <summary>
-    /// Creates a new Vector
+    /// Creates a Vector from a complex number
+    /// </summary>
+    /// <param name="complex">Complex number</param>
+    /// <returns>a new 2 dimensional vector</returns>
+    public Vector2 Vector(Complex complex)
+        => new Vector2((float)complex.Real, (float)complex.Imaginary);
+
+    /// <summary>
+    /// Creates a Vector
     /// </summary>
     /// <param name="x">x value</param>
     /// <param name="y">y value</param>
