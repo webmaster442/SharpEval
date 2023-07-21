@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics;
-using System.Globalization;
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.Completion;
 
 using SharpEval.Core.Internals;
 using SharpEval.Core.Internals.ResultFormatters;
