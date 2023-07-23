@@ -52,6 +52,12 @@ namespace SharpEval.Tests.Internals
             Events.Push(new Event(EventType.Trace, trace));
         }
 
+
+        void IResultWrtiter.Error(string message)
+        {
+            Events.Push(new Event(EventType.Error, message));
+        }
+
         void IResultWrtiter.Result(string result)
         {
             Events.Push(new Event(EventType.Result, result));

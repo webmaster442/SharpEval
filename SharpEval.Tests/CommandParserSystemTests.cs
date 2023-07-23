@@ -37,6 +37,20 @@ namespace SharpEval.Tests
             });
         }
 
+        [TestCase("3+", "(1,3): error CS1733: Expected expression")]
+        [TestCase("Vector(1, 2) + Vector(1, 2, 3)", "(1,1): error CS0019: Operator '+' cannot be applied to operands of type 'Vector2' and 'Vector3'")]
+        public async Task TestErrorResult(string input, string expected)
+        {
+            _testIO.SetInput(input);
+            await _sut.RunAsync();
+            var lastEvent = _testIO.Events.Pop();
+            Assert.Multiple(() =>
+            {
+                Assert.That(lastEvent.EventType, Is.EqualTo(TestIO.EventType.Error));
+                Assert.That(lastEvent.Result, Is.EqualTo(expected));
+            });
+        }
+
         [Test]
         public async Task TestEchoCommandOff()
         {
