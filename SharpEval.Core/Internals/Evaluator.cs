@@ -91,7 +91,7 @@ internal sealed class Evaluator
             {
                 Error =ex.Message,
                 ResultData = null,
-                Trace = ex.StackTrace ?? string.Empty
+                Trace = ex.StackTrace ?? "No trace was found"
             };
         }
     }

@@ -111,7 +111,10 @@ namespace SharpEval.Core
 
                     if (!string.IsNullOrEmpty(result.Error))
                     {
-                        _resultWrtiter.Error(result.Error);
+                        if (Settings.Trace)
+                            _resultWrtiter.Error(result.Error, result.Trace);
+                        else
+                            _resultWrtiter.Error(result.Error, string.Empty);
                     }
                     else if (result.ResultData is ISvgImage svgImage)
                     {
@@ -166,7 +169,10 @@ namespace SharpEval.Core
             }
             catch (Exception ex)
             {
-                _resultWrtiter.Error(ex.Message);
+                if (Settings.Trace)
+                    _resultWrtiter.Error(ex.Message, ex.StackTrace ?? "No trace found");
+                else
+                    _resultWrtiter.Error(ex.Message, string.Empty);
             }
         }
     }

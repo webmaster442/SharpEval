@@ -106,6 +106,15 @@ namespace SharpEval.Core.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turn stack trace display on or off, when an error occures.
+        /// </summary>
+        internal static string CmdTrace {
+            get {
+                return ResourceManager.GetString("CmdTrace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Display variables.
         /// </summary>
         internal static string CmdVars {

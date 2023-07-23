@@ -132,6 +132,9 @@
   <data name="CmdReset" xml:space="preserve">
     <value>Reset evaluator &amp; clean variables</value>
   </data>
+  <data name="CmdTrace" xml:space="preserve">
+    <value>Turn stack trace display on or off, when an error occures</value>
+  </data>
   <data name="CmdVars" xml:space="preserve">
     <value>Display variables</value>
   </data>
