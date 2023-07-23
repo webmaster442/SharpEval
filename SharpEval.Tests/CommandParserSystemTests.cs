@@ -1,6 +1,7 @@
 ﻿using Moq;
 
 using SharpEval.Tests.Internals;
+using SharpEval.Tests.Properties;
 using SharpEval.Webservices;
 
 namespace SharpEval.Tests
@@ -18,6 +19,24 @@ namespace SharpEval.Tests
             _testIO = new TestIO();
             _apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
             _sut = new CommandParser(_testIO, _testIO, _apiClientMock.Object);
+        }
+
+        [Test]
+        public async Task TestPlot()
+        {
+            _testIO.SetInput("PlotSize(300, 300)",
+                             "PlotTitle(\"Test\")",
+                             "PlotBackground(\"#c0c0c0\")",
+                             "PlotFunction(x => 1/x, 0, 1, 0.05, \"1/x\")",
+                             "PlotPrint()");
+
+            await _sut.RunAsync();
+            var lastEvent = _testIO.Events.Pop();
+            Assert.Multiple(() =>
+            {
+                Assert.That(lastEvent.EventType, Is.EqualTo(TestIO.EventType.Image));
+                Assert.That(lastEvent.Result, Is.EqualTo(Resources.plot_svg));
+            });
         }
 
         [TestCase("", "")]
