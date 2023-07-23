@@ -3,6 +3,13 @@ using OxyPlot.Series;
 
 namespace SharpEval.Core.Internals
 {
+    /// <summary>
+    /// Plot delegate
+    /// </summary>
+    /// <param name="argument"></param>
+    /// <returns></returns>
+    public delegate double PlotDelegate(double argument);
+
     internal sealed class Plotter
     {
         private readonly PlotModel _model;

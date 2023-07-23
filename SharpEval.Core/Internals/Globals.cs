@@ -519,8 +519,8 @@ public sealed class Globals
     /// <param name="end">end point for the plot</param>
     /// <param name="step">step size</param>
     /// <param name="title">Title to associate to function</param>
-    public void PlotFunction(Func<double, double> function, double start, double end, double step, string title)
-        => _plotter.Function(function, start, end, step, title);
+    public void PlotFunction(PlotDelegate function, double start, double end, double step, string title)
+        => _plotter.Function(f => function(f), start, end, step, title);
 
     /// <summary>
     /// Set plot title

@@ -46,6 +46,7 @@ namespace SharpEval.Tests
         [TestCase("Count")]
         [TestCase("Average")]
         [TestCase("Randomize")]
+        [TestCase("PlotFunction")]
         public void TestDocumentation(string itemName)
         {
             var keys = _sut.GetDocumentations().Select(x => x.Key);
