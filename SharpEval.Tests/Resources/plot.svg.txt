@@ -32,7 +32,7 @@
     <polyline points="29.008,73.0907 25.008,73.0907" style="fill:none;stroke:black;stroke-width:1" shape-rendering="crispEdges" />
     <polyline points="29.008,60.8698 25.008,60.8698" style="fill:none;stroke:black;stroke-width:1" shape-rendering="crispEdges" />
     <polyline points="29.008,48.6489 25.008,48.6489" style="fill:none;stroke:black;stroke-width:1" shape-rendering="crispEdges" />
-    <text dominant-baseline="hanging" text-anchor="middle" transform="translate(150.7549,281.947)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0,5</text>
+    <text dominant-baseline="hanging" text-anchor="middle" transform="translate(150.7549,281.947)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">0.5</text>
     <text dominant-baseline="hanging" text-anchor="middle" transform="translate(283.2324,281.947)" font-family="Segoe UI" font-size="12" font-weight="400" fill="black">1</text>
     <polyline points="150.7549,270.947 150.7549,277.947" style="fill:none;stroke:black;stroke-width:1" shape-rendering="crispEdges" />
     <polyline points="283.2324,270.947 283.2324,277.947" style="fill:none;stroke:black;stroke-width:1" shape-rendering="crispEdges" />

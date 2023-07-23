@@ -6,16 +6,9 @@
     public sealed class PrimeSequence : NumberSequenceBase
     {
         /// <inheritdoc/>
-        public override long Minimum
-        {
-            get => 0;
-            set => throw new NotSupportedException("Can't change minumum");
-        }
-
-        /// <inheritdoc/>
         public override IEnumerator<long> GetEnumerator()
         {
-            for (long number = Math.Max(2, Minimum); number <= Maximum; number++)
+            for (long number = Minimum; number <= Maximum; number++)
             {
                 if (IsPrime(number))
                     yield return number;

@@ -1,5 +1,9 @@
-﻿using OxyPlot;
+﻿using System.Globalization;
+
+using OxyPlot;
 using OxyPlot.Series;
+
+using SharpEval.Core.Maths.Sequences;
 
 namespace SharpEval.Core.Internals
 {
@@ -20,7 +24,8 @@ namespace SharpEval.Core.Internals
         {
             _model = new PlotModel
             {
-                Background = OxyColor.FromRgb(255, 255, 255)
+                Background = OxyColor.FromRgb(255, 255, 255),
+                Culture = CultureInfo.InvariantCulture,
             };
             _width = 1800;
             _height = 1200;
@@ -29,6 +34,7 @@ namespace SharpEval.Core.Internals
         public void Reset()
         {
             _model.Background = OxyColor.FromRgb(255, 255, 255);
+            _model.Culture = CultureInfo.InvariantCulture;
             _model.Series.Clear();
             _width = 1800;
             _height = 1200;
@@ -47,6 +53,13 @@ namespace SharpEval.Core.Internals
         public void Function(Func<double, double> function, double start, double end, double step, string title)
         {
             _model.Series.Add(new FunctionSeries(function, start, end, step, title));
+        }
+
+        public void Line(NumberSequenceBase sequence)
+        {
+            var series = new LineSeries();
+            series.Points.AddRange(sequence.Select((x, y) => new DataPoint(x, y)));
+            _model.Series.Add(series);
         }
 
         public void Size(int width, int height) 

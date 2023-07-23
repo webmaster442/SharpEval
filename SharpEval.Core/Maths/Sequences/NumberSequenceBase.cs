@@ -16,7 +16,7 @@ namespace SharpEval.Core.Maths.Sequences
         /// <summary>
         /// Series minimimum value. Series items are generated between minimum  and maximum.
         /// </summary>
-        public abstract long Minimum
+        public virtual long Minimum
         {
             get;
             set;

@@ -2,6 +2,7 @@
 using System.Numerics;
 
 using SharpEval.Core.Maths;
+using SharpEval.Core.Maths.Sequences;
 using SharpEval.Webservices;
 
 namespace SharpEval.Core.Internals;
@@ -588,4 +589,21 @@ public sealed class Globals
     /// <returns></returns>
     public double Exchange(double ammount, string from, string to)
         => _apiAdapter.GetExchange(ammount, from, to);
+
+    /// <summary>
+    /// Creates a prime number sequence containing prime numbers between the minimum and maximum value
+    /// </summary>
+    /// <param name="minimum">starting number</param>
+    /// <param name="maximum">end number</param>
+    /// <returns>A sequence containing prime numbers between the minimum and maximum value</returns>
+    public PrimeSequence Primes(long minimum, long maximum)
+        => new() { Minimum = minimum, Maximum = maximum };
+
+    /// <summary>
+    /// Creates a fibonacci number sequence containing prime numbers between the minimum and maximum value
+    /// </summary>
+    /// <param name="maximum">end number</param>
+    /// <returns>A sequence containing fibonacci numbers between the minimum and maximum value</returns>
+    public FibonacciSequence Fibonacci(long maximum)
+        => new() { Maximum = maximum };
 }
