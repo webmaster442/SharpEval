@@ -30,10 +30,17 @@ namespace SharpEval
         public void Result(IEnumerable<ITableRow> tableRows)
         {
             var table = new Table();
+            if (table.Columns.Count < 1)
+            {
+                int count = tableRows.FirstOrDefault()?.ColumnCount ?? 0;
+                string[] columns = new string[count];
+                Array.Fill(columns, string.Empty);
+                table.AddColumns(columns);
+            }
             foreach (var row in tableRows)
             {
                 var columnData = row.Columns.ToArray();
-                table.AddRow(columnData);
+                table.AddRow(columnData.Select(x => x.EscapeMarkup()).ToArray());
             }
             AnsiConsole.Write(table);
         }
