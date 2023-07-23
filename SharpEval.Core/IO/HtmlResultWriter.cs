@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿
+using System.Text;
 
 namespace SharpEval.Core.IO
 {
@@ -46,17 +47,17 @@ namespace SharpEval.Core.IO
         /// <inheritdoc/>
         public void Result(IEnumerable<ITableRow> tableRows)
         {
-            _buffer.Append("<table>");
+            _buffer.Append("<table>\r\n");
             foreach (ITableRow row in tableRows)
             {
-                _buffer.Append("<tr>");
+                _buffer.Append("<tr>\r\n");
                 foreach (var column in row.Columns)
                 {
-                    _buffer.AppendFormat("<td>{0}</td>", column);
+                    _buffer.AppendFormat("<td>{0}</td>\r\n", column);
                 }
-                _buffer.Append("</tr>");
+                _buffer.Append("</tr>\r\n");
             }
-            _buffer.Append("</table>");
+            _buffer.Append("</table>\r\n");
         }
 
         /// <inheritdoc/>
