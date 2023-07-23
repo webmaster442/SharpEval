@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\SharpEval.Core\SharpEval.Core.csproj" />
+        <ProjectReference Include="..\SharpEval.Webservices\SharpEval.Webservices.csproj" />
     </ItemGroup>
 
 </Project>

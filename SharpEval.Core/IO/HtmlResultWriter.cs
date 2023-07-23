@@ -25,9 +25,10 @@ namespace SharpEval.Core.IO
         }
 
         /// <inheritdoc/>
-        public void Error(string message)
+        public void Error(string message, string trace = "")
         {
             _buffer.AppendFormat("<span style=\"color: red; font-weight: bold;\">{0}</span>\r\n", message);
+            _buffer.AppendFormat("<code><pre>{0}</pre></code>\r\n", trace);
         }
 
         /// <inheritdoc/>

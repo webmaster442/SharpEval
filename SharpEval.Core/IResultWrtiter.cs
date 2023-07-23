@@ -16,7 +16,8 @@
         /// Writes an error message
         /// </summary>
         /// <param name="message">error message string</param>
-        void Error(string message);
+        /// <param name="trace">Trace information for the error</param>
+        void Error(string message, string trace = "");
         /// <summary>
         /// Writes result as a string
         /// </summary>

@@ -80,25 +80,19 @@ internal sealed class Evaluator
             return new EvaluatorResult
             {
                 ResultData = _state?.ReturnValue,
-                Error = string.Empty
+                Error = string.Empty,
+                Trace = string.Empty,
             };
 
         }
         catch (Exception ex)
         {
-#if DEBUG
             return new EvaluatorResult
             {
-                Error = $"{ex.Message}\r\nTrace:\r\n{ex.StackTrace}",
+                Error =ex.Message,
                 ResultData = null,
+                Trace = ex.StackTrace ?? string.Empty
             };
-#else
-            return new EvaluatorResult
-            {
-                Error = ex.Message,
-                ResultData = null,
-            };
-#endif
         }
     }
 

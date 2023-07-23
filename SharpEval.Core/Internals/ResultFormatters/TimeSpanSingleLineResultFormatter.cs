@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace SharpEval.Core.Internals.ResultFormatters
 {
@@ -17,7 +18,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
                     + $"Years (Aproximated): {years}\r\n"
                     + $"Months (Aproximated): {months}";
             }
-            return string.Empty;
+            throw new UnreachableException("type should be TimeSpan");
         }
 
         public override bool IsTypeMatch(object? o)

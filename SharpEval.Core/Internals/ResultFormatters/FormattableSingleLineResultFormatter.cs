@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 
 namespace SharpEval.Core.Internals.ResultFormatters
 {
@@ -9,7 +10,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
             if (o is IFormattable formattable)
                 return formattable.ToString(string.Empty, CultureInfo.InvariantCulture);
 
-            return string.Empty;
+            throw new UnreachableException("type should be IFormattable");
         }
 
         public override bool IsTypeMatch(object? o)

@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Diagnostics;
+using System.Numerics;
 
 using SharpEval.Core.Maths;
 
@@ -9,7 +10,7 @@ namespace SharpEval.Core.Internals.ResultFormatters
         public override string GetString(object? o, AngleSystem angleSystem)
         {
             if (o is not Complex complex)
-                return string.Empty;
+                throw new UnreachableException("type should be Complex");
 
             return $"{complex.Real} + {complex.Imaginary}i\r\nr = {complex.Magnitude} φ = {GetPhase(complex.Phase, angleSystem)}";
         }

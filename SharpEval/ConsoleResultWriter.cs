@@ -11,9 +11,10 @@ namespace SharpEval
             AnsiConsole.MarkupLine($"[bold]({currentAngleSystem}) {command}:[/]");
         }
 
-        public void Error(string message)
+        public void Error(string message, string trace = "")
         {
             AnsiConsole.MarkupLine($"[bold red]{message.EscapeMarkup()}[/]");
+            AnsiConsole.MarkupLine($"[bold red]{trace.EscapeMarkup()}[/]");
         }
 
         public void Result(string result)
