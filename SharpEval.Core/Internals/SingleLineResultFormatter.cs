@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal abstract class SingleLineResultFormatter : ResultFormatter
 {
-    internal abstract class SingleLineResultFormatter : ResultFormatter
-    {
-        public abstract string GetString(object? o, AngleSystem angleSystem);
-    }
+    public abstract string GetString(object? o, AngleSystem angleSystem);
 }

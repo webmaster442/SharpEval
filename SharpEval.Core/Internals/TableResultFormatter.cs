@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal abstract class TableResultFormatter : ResultFormatter
 {
-    internal abstract class TableResultFormatter : ResultFormatter
-    {
-        public abstract IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem);
-    }
+    public abstract IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem);
 }

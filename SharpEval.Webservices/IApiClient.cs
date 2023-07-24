@@ -1,9 +1,8 @@
 ﻿using SharpEval.Webservices.Ecb;
 
-namespace SharpEval.Webservices
+namespace SharpEval.Webservices;
+
+public interface IApiClient
 {
-    public interface IApiClient
-    {
-        Task<Envelope> GetCurrencyRates();
-    }
+    Task<Envelope> GetCurrencyRates();
 }

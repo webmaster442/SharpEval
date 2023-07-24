@@ -1,17 +1,14 @@
-﻿using System.Globalization;
+﻿namespace SharpEval.Core.Internals.ResultFormatters;
 
-namespace SharpEval.Core.Internals.ResultFormatters
+internal sealed class NullSingleLineResultFormatter : SingleLineResultFormatter
 {
-    internal sealed class NullSingleLineResultFormatter : SingleLineResultFormatter
+    public override string GetString(object? o, AngleSystem angleSystem)
     {
-        public override string GetString(object? o, AngleSystem angleSystem)
-        {
-            return string.Empty;
-        }
+        return string.Empty;
+    }
 
-        public override bool IsTypeMatch(object? o)
-        {
-            return o is null;
-        }
+    public override bool IsTypeMatch(object? o)
+    {
+        return o is null;
     }
 }

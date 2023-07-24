@@ -3,7 +3,6 @@ using System.Numerics;
 
 using SharpEval.Core.Maths;
 using SharpEval.Core.Maths.Sequences;
-using SharpEval.Webservices;
 
 namespace SharpEval.Core.Internals;
 

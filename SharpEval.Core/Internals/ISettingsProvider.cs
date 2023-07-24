@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal interface ISettingsProvider
 {
-    internal interface ISettingsProvider
-    {
-        Settings GetSettings();
-    }
+    Settings GetSettings();
 }

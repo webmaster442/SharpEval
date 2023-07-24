@@ -1,97 +1,95 @@
 ﻿using System.Diagnostics;
-using System.Threading.Tasks.Dataflow;
 
-namespace SharpEval.Core.Maths
+namespace SharpEval.Core.Maths;
+
+internal static class Trigonometry
 {
-    internal static class Trigonometry
+    private static double GetRadians(double angle, AngleSystem angleSystem)
     {
-        private static double GetRadians(double angle, AngleSystem angleSystem)
+        switch (angleSystem)
         {
-            switch (angleSystem)
-            {
-                case AngleSystem.Rad:
-                    return angle;
-                case AngleSystem.Deg:
-                    angle %= 360;
-                    angle = angle > 180 ? angle -= 360 : angle;
-                    return (angle * Math.PI) / 180.0d;
-                case AngleSystem.Grad:
-                    angle %= 400;
-                    angle = angle > 200 ? angle -= 400 : angle;
-                    return (angle * Math.PI) / 200.0d;
-                default:
-                    throw new UnreachableException("Unknown enum value");
-            }
+            case AngleSystem.Rad:
+                return angle;
+            case AngleSystem.Deg:
+                angle %= 360;
+                angle = angle > 180 ? angle -= 360 : angle;
+                return (angle * Math.PI) / 180.0d;
+            case AngleSystem.Grad:
+                angle %= 400;
+                angle = angle > 200 ? angle -= 400 : angle;
+                return (angle * Math.PI) / 200.0d;
+            default:
+                throw new UnreachableException("Unknown enum value");
+        }
+    }
+
+    public static double GetDegrees(double radians, AngleSystem angleSystem)
+    {
+        switch (angleSystem)
+        {
+            case AngleSystem.Rad:
+                return radians;
+            case AngleSystem.Deg:
+                return radians * (180 / Math.PI); ;
+            case AngleSystem.Grad:
+                return radians * (200 / Math.PI);
+            default:
+                throw new UnreachableException("Unknown enum value");
+        }
+    }
+
+    private static double Correct(double result)
+    {
+        if (Math.Abs(result) <= 1.3E-16d)
+            return 0;
+
+        if (Math.Abs(1 - result) <= 1E-12)
+            return result > 0 ? 1 : -1;
+
+        if (Math.Abs(result) >= 16331239353195370d)
+        {
+            return result > 0 ? double.PositiveInfinity : double.NegativeInfinity;
         }
 
-        public static double GetDegrees(double radians, AngleSystem angleSystem)
-        {
-            switch (angleSystem)
-            {
-                case AngleSystem.Rad:
-                    return radians;
-                case AngleSystem.Deg:
-                    return radians * (180 / Math.PI); ;
-                case AngleSystem.Grad:
-                    return radians * (200 / Math.PI);
-                default:
-                    throw new UnreachableException("Unknown enum value");
-            }
-        }
+        return result;
+    }
 
-        private static double Correct(double result)
-        {
-            if (Math.Abs(result) <= 1.3E-16d)
-                return 0;
+    public static double Sin(double angle, AngleSystem angleSystem)
+    {
+        double radians = GetRadians(angle, angleSystem);
+        double result = Math.Sin(radians);
+        return Correct(result);
+    }
 
-            if (Math.Abs(1 - result) <= 1E-12)
-                return result > 0 ? 1 : -1;
+    public static double ArcSin(double value, AngleSystem angleSystem)
+    {
+        double radians = Math.Asin(value);
+        return GetDegrees(radians, angleSystem);
+    }
 
-            if (Math.Abs(result) >= 16331239353195370d)
-            {
-                return result > 0 ? double.PositiveInfinity : double.NegativeInfinity;
-            }
+    public static double Cos(double angle, AngleSystem angleSystem)
+    {
+        double radians = GetRadians(angle, angleSystem);
+        double result = Math.Cos(radians);
+        return Correct(result);
+    }
 
-            return result;
-        }
+    public static double ArcCos(double value, AngleSystem angleSystem)
+    {
+        double radians = Math.Acos(value);
+        return GetDegrees(radians, angleSystem);
+    }
 
-        public static double Sin(double angle, AngleSystem angleSystem)
-        {
-            double radians = GetRadians(angle, angleSystem);
-            double result = Math.Sin(radians);
-            return Correct(result);
-        }
+    public static double Tan(double angle, AngleSystem angleSystem)
+    {
+        double radians = GetRadians(angle, angleSystem);
+        double result = Math.Tan(radians);
+        return Correct(result);
+    }
 
-        public static double ArcSin(double value, AngleSystem angleSystem)
-        {
-            double radians = Math.Asin(value);
-            return GetDegrees(radians, angleSystem);
-        }
-
-        public static double Cos(double angle, AngleSystem angleSystem)
-        {
-            double radians = GetRadians(angle, angleSystem);
-            double result = Math.Cos(radians);
-            return Correct(result);
-        }
-
-        public static double ArcCos(double value, AngleSystem angleSystem)
-        {
-            double radians = Math.Acos(value);
-            return GetDegrees(radians, angleSystem);
-        }
-
-        public static double Tan(double angle, AngleSystem angleSystem)
-        {
-            double radians = GetRadians(angle, angleSystem);
-            double result = Math.Tan(radians);
-            return Correct(result);
-        }
-
-        public static double ArcTan(double value, AngleSystem angleSystem)
-        {
-            double radians = Math.Atan(value);
-            return GetDegrees(radians, angleSystem);
-        }
+    public static double ArcTan(double value, AngleSystem angleSystem)
+    {
+        double radians = Math.Atan(value);
+        return GetDegrees(radians, angleSystem);
     }
 }

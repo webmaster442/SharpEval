@@ -1,9 +1,8 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal interface ICommand
 {
-    internal interface ICommand
-    {
-        void Execute(ICommandHost host, Arguments commandArguments);
-        string Name { get; }
-        string HelpMessage { get; }
-    }
+    void Execute(ICommandHost host, Arguments commandArguments);
+    string Name { get; }
+    string HelpMessage { get; }
 }

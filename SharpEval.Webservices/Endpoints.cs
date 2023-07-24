@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Webservices
+﻿namespace SharpEval.Webservices;
+
+internal static class Endpoints
 {
-    internal static class Endpoints
-    {
-        public const string EcbEndpoint = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
-    }
+    public const string EcbEndpoint = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 }

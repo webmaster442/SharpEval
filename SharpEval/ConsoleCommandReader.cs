@@ -3,67 +3,66 @@
 using SharpEval.Core;
 using SharpEval.Core.IO;
 
-namespace SharpEval
+namespace SharpEval;
+
+internal sealed class ConsoleCommandReader : ICommandReader, IDisposable
 {
-    internal sealed class ConsoleCommandReader : ICommandReader, IDisposable
+    private readonly Prompt _prompt;
+    private readonly PromptConfiguration _configuration;
+    private readonly CancellationTokenSource _tokenSource;
+    private bool _disposed;
+
+    public CancellationToken CancellationToken => _tokenSource.Token;
+
+    public Func<string>? PromptFunction { get; set; }
+
+    public ConsoleCommandReader(IDocumentationProvider documentationProvider)
     {
-        private readonly Prompt _prompt;
-        private readonly PromptConfiguration _configuration;
-        private readonly CancellationTokenSource _tokenSource;
-        private bool _disposed = false;
+        Console.CancelKeyPress += OnExitRequest;
+        _tokenSource = new CancellationTokenSource();
+        _configuration = new PromptConfiguration();
+        _prompt = new Prompt(null, new PropmptCallbacks(documentationProvider), null, _configuration);
+    }
 
-        public CancellationToken CancellationToken => _tokenSource.Token;
+    private void OnExitRequest(object? sender, ConsoleCancelEventArgs e)
+    {
+        _tokenSource.Cancel();
+    }
 
-        public Func<string>? PromptFunction { get; set; }
-
-        public ConsoleCommandReader(IDocumentationProvider documentationProvider)
+    private async Task<(bool result, string line)> TryReadLine()
+    {
+        _configuration.Prompt = PromptFunction?.Invoke() ?? string.Empty;
+        var result = await _prompt.ReadLineAsync();
+        if (result.IsSuccess)
         {
-            Console.CancelKeyPress += OnExitRequest;
-            _tokenSource = new CancellationTokenSource();
-            _configuration = new PromptConfiguration();
-            _prompt = new Prompt(null, new PropmptCallbacks(documentationProvider), null, _configuration);
+            return (true, result.Text);
         }
+        return (false, string.Empty);
+    }
 
-        private void OnExitRequest(object? sender, ConsoleCancelEventArgs e)
+    public void Dispose()
+    {
+        if (!_disposed && _tokenSource != null)
         {
-            _tokenSource.Cancel();
+            _tokenSource.Dispose();
+            _disposed = true;
         }
+    }
 
-        private async Task<(bool result, string line)> TryReadLine()
+    public IEnumerable<string> InputLines
+    {
+        get
         {
-            _configuration.Prompt = PromptFunction?.Invoke() ?? string.Empty;
-            var result = await _prompt.ReadLineAsync();
-            if (result.IsSuccess)
+            while (true)
             {
-                return (true, result.Text);
-            }
-            return (false, string.Empty);
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed && _tokenSource != null)
-            {
-                _tokenSource.Dispose();
-                _disposed = true;
-            }
-        }
-
-        public IEnumerable<string> InputLines
-        {
-            get
-            {
-                while (true)
+                var (result, line) = TryReadLine().GetAwaiter().GetResult();
+                if (result)
                 {
-                    var read = TryReadLine().GetAwaiter().GetResult();
-                    if (read.result)
-                    {
-                        yield return read.line;
-                    }
-                    else
-                    {
-                        yield break;
-                    }
+                    yield return line;
+                }
+                else
+                {
+                    yield break;
                 }
             }
         }

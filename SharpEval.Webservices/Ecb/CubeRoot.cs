@@ -10,7 +10,7 @@ public class CubeRoot
     [XmlElement("Cube")]
     public CubeCollection Cubes { get; set; }
 
-    public CubeRoot() 
+    public CubeRoot()
     {
         Cubes = new CubeCollection();
     }

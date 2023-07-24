@@ -28,9 +28,9 @@ internal sealed class TableRow : ITableRow
 
         var ziped = Columns.Zip(other.Columns);
 
-        foreach (var item in ziped)
+        foreach (var (First, Second) in ziped)
         {
-            if (item.First != item.Second) return false;
+            if (First != Second) return false;
         }
 
         return true;

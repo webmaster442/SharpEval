@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal abstract class ResultFormatter
 {
-    internal abstract class ResultFormatter
-    {
-        public abstract bool IsTypeMatch(object? o);
-    }
+    public abstract bool IsTypeMatch(object? o);
 }

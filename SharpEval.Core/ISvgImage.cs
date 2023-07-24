@@ -1,13 +1,12 @@
-﻿namespace SharpEval.Core
+﻿namespace SharpEval.Core;
+
+/// <summary>
+/// SVG image interface
+/// </summary>
+public interface ISvgImage
 {
     /// <summary>
-    /// SVG image interface
+    /// SVG Content data
     /// </summary>
-    public interface ISvgImage
-    {
-        /// <summary>
-        /// SVG Content data
-        /// </summary>
-        string Data { get; }
-    }
+    string Data { get; }
 }

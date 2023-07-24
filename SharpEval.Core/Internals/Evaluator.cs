@@ -89,7 +89,7 @@ internal sealed class Evaluator
         {
             return new EvaluatorResult
             {
-                Error =ex.Message,
+                Error = ex.Message,
                 ResultData = null,
                 Trace = ex.StackTrace ?? "No trace was found"
             };

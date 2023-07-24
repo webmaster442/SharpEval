@@ -1,14 +1,7 @@
-﻿using System.Globalization;
-
-using Moq;
-
-using SharpEval.Core.Internals;
-using SharpEval.Webservices;
-
-namespace SharpEval.Tests;
+﻿namespace SharpEval.Tests;
 
 [TestFixture]
-internal class TestEvaluator
+public class TestEvaluator
 {
     private Evaluator _sut;
     private Mock<ISettingsProvider> _settingProviderMock;

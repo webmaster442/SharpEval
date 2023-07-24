@@ -1,14 +1,13 @@
-﻿namespace SharpEval.Core.IO
+﻿namespace SharpEval.Core.IO;
+
+/// <summary>
+/// Defines interface to retrieve documentation
+/// </summary>
+public interface IDocumentationProvider
 {
     /// <summary>
-    /// Defines interface to retrieve documentation
+    /// Retuns documentations
     /// </summary>
-    public interface IDocumentationProvider
-    {
-        /// <summary>
-        /// Retuns documentations
-        /// </summary>
-        /// <returns>Documentations grouped by command/function name</returns>
-        public IReadOnlyDictionary<string, List<string>> GetDocumentations();
-    }
+    /// <returns>Documentations grouped by command/function name</returns>
+    public IReadOnlyDictionary<string, List<string>> GetDocumentations();
 }

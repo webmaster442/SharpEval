@@ -3,24 +3,23 @@ using System.Numerics;
 
 using SharpEval.Core.Maths;
 
-namespace SharpEval.Core.Internals.ResultFormatters
+namespace SharpEval.Core.Internals.ResultFormatters;
+
+internal sealed class CompexSingleLineResultFormatter : SingleLineResultFormatter
 {
-    internal sealed class CompexSingleLineResultFormatter : SingleLineResultFormatter
+    public override string GetString(object? o, AngleSystem angleSystem)
     {
-        public override string GetString(object? o, AngleSystem angleSystem)
-        {
-            if (o is not Complex complex)
-                throw new UnreachableException("type should be Complex");
+        if (o is not Complex complex)
+            throw new UnreachableException("type should be Complex");
 
-            return $"{complex.Real} + {complex.Imaginary}i\r\nr = {complex.Magnitude} φ = {GetPhase(complex.Phase, angleSystem)}";
-        }
+        return $"{complex.Real} + {complex.Imaginary}i\r\nr = {complex.Magnitude} φ = {GetPhase(complex.Phase, angleSystem)}";
+    }
 
-        private static double GetPhase(double phase, AngleSystem angleSystem)
-            => Trigonometry.GetDegrees(phase, angleSystem);
+    private static double GetPhase(double phase, AngleSystem angleSystem)
+        => Trigonometry.GetDegrees(phase, angleSystem);
 
-        public override bool IsTypeMatch(object? o)
-        {
-            return o is Complex;
-        }
+    public override bool IsTypeMatch(object? o)
+    {
+        return o is Complex;
     }
 }

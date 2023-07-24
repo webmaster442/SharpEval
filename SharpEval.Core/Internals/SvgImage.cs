@@ -1,7 +1,6 @@
-﻿namespace SharpEval.Core.Internals
+﻿namespace SharpEval.Core.Internals;
+
+internal sealed class SvgImage : ISvgImage
 {
-    internal sealed class SvgImage : ISvgImage
-    {
-        public required string Data { get; init; }
-    }
+    public required string Data { get; init; }
 }

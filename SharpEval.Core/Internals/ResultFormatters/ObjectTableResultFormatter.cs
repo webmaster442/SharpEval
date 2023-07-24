@@ -1,43 +1,41 @@
-﻿using System.Globalization;
-using System.Reflection;
+﻿using System.Reflection;
 
-namespace SharpEval.Core.Internals.ResultFormatters
+namespace SharpEval.Core.Internals.ResultFormatters;
+
+internal sealed class ObjectTableResultFormatter : TableResultFormatter
 {
-    internal sealed class ObjectTableResultFormatter : TableResultFormatter
+    private Dictionary<string, string> GetPropertyValues(object o)
     {
-        private Dictionary<string, string> GetPropertyValues(object o)
+        var properties = o?
+            .GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            ?? Array.Empty<PropertyInfo>();
+
+        Dictionary<string, string> results = new();
+
+        foreach (var property in properties)
         {
-            var properties = o?
-                .GetType()
-                .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                ?? Array.Empty<PropertyInfo>();
+            if (!property.CanRead)
+                continue;
 
-            Dictionary<string, string> results = new();
-
-            foreach (var property in properties)
-            {
-                if (!property.CanRead)
-                    continue;
-
-                var value = property.GetValue(o)?.ToString() ?? string.Empty;
-                results.Add(property.Name, value);
-            }
-
-            return results;
+            var value = property.GetValue(o)?.ToString() ?? string.Empty;
+            results.Add(property.Name, value);
         }
 
-        public override bool IsTypeMatch(object? o)
-        {
-            return o is not null;
-        }
+        return results;
+    }
+
+    public override bool IsTypeMatch(object? o)
+    {
+        return o is not null;
+    }
 
 
-        public override IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem)
+    public override IEnumerable<ITableRow> ToTable(object? o, AngleSystem angleSystem)
+    {
+        foreach (var row in GetPropertyValues(o!))
         {
-            foreach (var row in GetPropertyValues(o!))
-            {
-                yield return new TableRow(row.Key, row.Value);
-            }
+            yield return new TableRow(row.Key, row.Value);
         }
     }
 }
