@@ -61,6 +61,26 @@ namespace SharpEval.Tests.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+        ///&lt;gesmes:Envelope xmlns:gesmes=&quot;http://www.gesmes.org/xml/2002-08-01&quot; xmlns=&quot;http://www.ecb.int/vocabulary/2002-08-01/eurofxref&quot;&gt;
+        ///  &lt;gesmes:subject&gt;Reference rates&lt;/gesmes:subject&gt;
+        ///  &lt;gesmes:Sender&gt;
+        ///    &lt;gesmes:name&gt;European Central Bank&lt;/gesmes:name&gt;
+        ///  &lt;/gesmes:Sender&gt;
+        ///  &lt;Cube&gt;
+        ///    &lt;Cube time=&apos;2023-07-24&apos;&gt;
+        ///      &lt;Cube currency=&apos;USD&apos; rate=&apos;1.1096&apos;/&gt;
+        ///      &lt;Cube currency=&apos;JPY&apos; rate=&apos;156.47&apos;/&gt;
+        ///      &lt;Cube currency=&apos;BGN&apos; rate=&apos;1.9558&apos;/&gt;
+        ///      &lt;Cube currency=&apos;CZK [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EcbResponse {
+            get {
+                return ResourceManager.GetString("EcbResponse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
         ///&lt;!DOCTYPE svg PUBLIC &quot;-//W3C//DTD SVG 1.1//EN&quot; &quot;http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd&quot;&gt;
         ///&lt;svg width=&quot;300&quot; height=&quot;300&quot; version=&quot;1.1&quot; xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;

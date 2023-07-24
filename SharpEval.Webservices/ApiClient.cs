@@ -9,8 +9,9 @@ public sealed class ApiClient : IApiClient
     private readonly Dictionary<string, CacheEntry> _cache;
     private readonly JsonSerializerOptions _jsonOptions;
     private readonly string _cacheFile;
+    private readonly EndpointConfiguration _endpointConfiguration;
 
-    public ApiClient()
+    public ApiClient(EndpointConfiguration endpointConfiguration, bool cacheEnabled = true)
     {
         _jsonOptions = new JsonSerializerOptions
         {
@@ -20,12 +21,14 @@ public sealed class ApiClient : IApiClient
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
         _cacheFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "SharpEval.Webcache.json");
-        _cache = LoadCache();
+        _cache = LoadCache(cacheEnabled);
+        _endpointConfiguration = endpointConfiguration;
     }
 
-    private Dictionary<string, CacheEntry> LoadCache()
+    private Dictionary<string, CacheEntry> LoadCache(bool cacheEnabled)
     {
-        if (File.Exists(_cacheFile))
+        if (File.Exists(_cacheFile) 
+            && cacheEnabled)
         {
             using (var file = File.OpenRead(_cacheFile))
             {
@@ -73,7 +76,7 @@ public sealed class ApiClient : IApiClient
 
     public async Task<Ecb.Envelope> GetCurrencyRates()
     {
-        string xml = await CallEndpoint(Endpoints.EcbEndpoint, TimeSpan.FromHours(24));
+        string xml = await CallEndpoint(_endpointConfiguration.EuropeCentralBank, TimeSpan.FromHours(8));
         return DeserializeXml<Ecb.Envelope>(xml);
     }
 

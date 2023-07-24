@@ -8,7 +8,7 @@ var docProvider = new FunctionDocumentationProvider();
 using var reader = new ConsoleCommandReader(docProvider);
 var writer = new ConsoleResultWriter();
 
-CommandParser parser = new CommandParser(reader, writer, new ApiClient());
+CommandParser parser = new CommandParser(reader, writer, new ApiClient(new EndpointConfiguration()));
 
 parser.Settings.EchoExpression = false;
 reader.PromptFunction = () => $"{parser.Settings.CurrentAngleSystem} >";
