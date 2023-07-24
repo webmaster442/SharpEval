@@ -27,7 +27,7 @@ namespace SharpEval.Core.Maths
                 var names = info.UnitInfos.Select(x => x.Name);
 
                 var abbreviations =
-                    UnitAbbreviationsCache.Default
+                    UnitsNetSetup.Default.UnitAbbreviations
                     .GetAllUnitAbbreviationsForQuantity(info.UnitType, cultureInfo);
 
                 _conversions.Add(info.Name, names.Concat(abbreviations).ToHashSet(StringComparer.OrdinalIgnoreCase));
