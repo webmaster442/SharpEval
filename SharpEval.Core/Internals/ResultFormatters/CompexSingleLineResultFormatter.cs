@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using System.Numerics;
 
 using SharpEval.Core.Maths;
@@ -12,7 +13,7 @@ internal sealed class CompexSingleLineResultFormatter : SingleLineResultFormatte
         if (o is not Complex complex)
             throw new UnreachableException("type should be Complex");
 
-        return $"{complex.Real} + {complex.Imaginary}i\r\nr = {complex.Magnitude} φ = {GetPhase(complex.Phase, angleSystem)}";
+        return $"{complex.Real.ToString(CultureInfo.InvariantCulture)} + {complex.Imaginary.ToString(CultureInfo.InvariantCulture)}i\r\nr = {complex.Magnitude.ToString(CultureInfo.InvariantCulture)} φ = {GetPhase(complex.Phase, angleSystem).ToString(CultureInfo.InvariantCulture)}";
     }
 
     private static double GetPhase(double phase, AngleSystem angleSystem)

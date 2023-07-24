@@ -40,4 +40,14 @@ internal static class Statistics
     {
         return Convert.ToDouble(Sum(items)) / items.Length;
     }
+
+    public static double GeometricMean<T>(params T[] items) where T: INumber<T>
+    {
+        T product = T.One;
+        for (int i=0; i<items.Length; i++)
+        {
+            product *= items[i];
+        }
+        return Math.Pow(Convert.ToDouble(product), 1 / items.Length);
+    }
 }

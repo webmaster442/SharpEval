@@ -38,9 +38,13 @@ public class CommandParserSystemTests
 
     [TestCase("", "")]
     [TestCase("Vector(1, 3)", "x: 1 y: 3")]
+    [TestCase("Vector(Complex(1, 3))", "x: 1 y: 3")]
     [TestCase("Vector(1, 3, 2)", "x: 1 y: 3 z: 2")]
     [TestCase("Complex(0, 1)", "0 + 1i\r\nr = 1 φ = 90")]
+    [TestCase("Complex(Vector(0, 1))", "0 + 1i\r\nr = 1 φ = 90")]
     [TestCase("Date(2000, 1, 1) - Date(1995, 1, 1)", "1826 days 0 hours 0 minutes 0 seconds\r\nYears (Aproximated): 4\r\nMonths (Aproximated): 59")]
+    [TestCase("Sqrt(Complex(4,3))", "2.1213203435596424 + 0.7071067811865476i\r\nr = 2.23606797749979 φ = 18.434948822922014")]
+    [TestCase("Pow(Complex(4,3), 2)", "7.000000000000001 + 24i\r\nr = 25 φ = 73.73979529168804")]
     public async Task TestSingleLineResult(string input, string expected)
     {
         _testIO.SetInput(input);
@@ -51,6 +55,21 @@ public class CommandParserSystemTests
             Assert.That(lastEvent.EventType, Is.EqualTo(TestIO.EventType.Result));
             Assert.That(lastEvent.Result, Is.EqualTo(expected));
         });
+    }
+
+    [TestCase("Primes(1, 10)", 5)]
+    [TestCase("Fibonacci(30)", 9)]
+    public async Task TestMultiLineResult(string input, int expectedCount)
+    {
+        _testIO.SetInput(input);
+        await _sut.RunAsync();
+        var lastEvent = _testIO.Events.Pop();
+        Assert.Multiple(() =>
+        {
+            Assert.That(lastEvent.EventType, Is.EqualTo(TestIO.EventType.Table));
+            Assert.That(lastEvent.Result.Split(Environment.NewLine), Has.Length.EqualTo(expectedCount));
+        });
+
     }
 
     [TestCase("3+", "(1,3): error CS1733: Expected expression")]
@@ -102,6 +121,14 @@ public class CommandParserSystemTests
         _testIO.SetInput("$mode rad");
         await _sut.RunAsync();
         Assert.That(_sut.Settings.CurrentAngleSystem, Is.EqualTo(AngleSystem.Rad));
+    }
+
+    [Test]
+    public async Task TestResetCommand()
+    {
+        _testIO.SetInput("var x = 11", "$reset");
+        await _sut.RunAsync();
+        Assert.That(_sut.Variables, Is.Empty);
     }
 
     [Test]

@@ -432,6 +432,15 @@ public sealed class Globals
         => Statistics.Average(items);
 
     /// <summary>
+    /// Computes the Geometric mean average of a sequence numbers
+    /// </summary>
+    /// <typeparam name="T">Type</typeparam>
+    /// <param name="items">A sequence of numbers</param>
+    /// <returns>the average of a sequence numbers</returns>
+    public static double GeometricMean<T>(params T[] items) where T : INumber<T>
+        => Statistics.GeometricMean(items);
+
+    /// <summary>
     /// Computes the range of a sequence numbers.
     /// The range is the spread of the elements from the lowest to the highest value 
     /// </summary>
@@ -595,7 +604,7 @@ public sealed class Globals
     /// <param name="minimum">starting number</param>
     /// <param name="maximum">end number</param>
     /// <returns>A sequence containing prime numbers between the minimum and maximum value</returns>
-    public PrimeSequence Primes(long minimum, long maximum)
+    public static PrimeSequence Primes(long minimum, long maximum)
         => new() { Minimum = minimum, Maximum = maximum };
 
     /// <summary>
@@ -603,6 +612,6 @@ public sealed class Globals
     /// </summary>
     /// <param name="maximum">end number</param>
     /// <returns>A sequence containing fibonacci numbers between the minimum and maximum value</returns>
-    public FibonacciSequence Fibonacci(long maximum)
+    public static FibonacciSequence Fibonacci(long maximum)
         => new() { Maximum = maximum };
 }

@@ -71,6 +71,12 @@ public sealed class CommandParser : ISettingsProvider, ICommandHost
     }
 
     /// <summary>
+    /// Currently set variables
+    /// </summary>
+    public IReadOnlyDictionary<string, object> Variables
+        => _evaluator.Variables;
+
+    /// <summary>
     /// Get registered command documentation
     /// </summary>
     /// <returns>Documentation as a Dictionary</returns>

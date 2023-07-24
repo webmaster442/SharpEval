@@ -103,6 +103,7 @@ public class TestEvaluator
     [TestCase("Date(1914, 1, 1, 11, 52)", "01/01/1914 11:52:00")]
     [TestCase("Date(1914, 1, 1, 11, 33, 22)", "01/01/1914 11:33:22")]
     [TestCase("Lcm(5, 2)", "10")]
+    [TestCase("GeometricMean(1, 2, 3)", "1")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);
