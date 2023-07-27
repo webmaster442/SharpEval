@@ -1,7 +1,8 @@
 ﻿using System.Text;
 
 namespace SharpEval.Core.Maths;
-internal class NumberInfoProvider
+
+internal static class NumberInfoProvider
 {
     private static int[] GetBinarySpacing(object obj)
     {
@@ -13,14 +14,16 @@ internal class NumberInfoProvider
             return new[] { 8, 8 };
         else if (obj.GetType() == typeof(int))
             return new[] { 1, 7, 8, 8, 8 };
-        else if (obj.GetType() == typeof(uint)
-            || obj.GetType() == typeof(float))
+        else if (obj.GetType() == typeof(uint))
             return new[] { 8, 8, 8, 8 };
+        else if (obj.GetType() == typeof(float))
+            return new[] { 1, 8, 23 };
         else if (obj.GetType() == typeof(long))
             return new[] { 1, 7, 8, 8, 8, 8, 8, 8, 8 };
-        else if (obj.GetType() == typeof(ulong)
-            || obj.GetType() == typeof(double))
+        else if (obj.GetType() == typeof(ulong))
             return new int[] { 8, 8, 8, 8, 8, 8, 8, 8 };
+        else if (obj.GetType() == typeof(double))
+            return new int[] { 1, 11, 52 };
         else
             return Array.Empty<int>();
     }

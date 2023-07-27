@@ -13,6 +13,7 @@ public class TestNumberInfoProvider
     [TestCase(double.MaxValue, 64, "7f ef ff ff ff ff ff ff")]
     [TestCase(float.MaxValue, 32, "7f 7f ff ff")]
     [TestCase(float.MinValue, 32, "ff 7f ff ff")]
+    [TestCase((int)-128, 32, "ff ff ff 80")]
     public void Test(object number, int bits, string hex)
     {
         var result = NumberInfoProvider.GetInfo(number);
