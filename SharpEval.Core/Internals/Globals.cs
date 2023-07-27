@@ -1,5 +1,8 @@
 ﻿using System.Globalization;
+using System.IO.Hashing;
 using System.Numerics;
+using System.Security.Cryptography;
+using System.Text;
 
 using SharpEval.Core.Maths;
 using SharpEval.Core.Maths.Sequences;
@@ -567,7 +570,7 @@ public sealed class Globals
     /// <param name="x">x value</param>
     /// <param name="y">y value</param>
     /// <returns>a new 2 dimensional vector</returns>
-    public Vector2 Vector(float x, float y)
+    public static Vector2 Vector(float x, float y)
         => new Vector2(x, y);
 
     /// <summary>
@@ -575,7 +578,7 @@ public sealed class Globals
     /// </summary>
     /// <param name="complex">Complex number</param>
     /// <returns>a new 2 dimensional vector</returns>
-    public Vector2 Vector(Complex complex)
+    public static Vector2 Vector(Complex complex)
         => new Vector2((float)complex.Real, (float)complex.Imaginary);
 
     /// <summary>
@@ -614,4 +617,60 @@ public sealed class Globals
     /// <returns>A sequence containing fibonacci numbers between the minimum and maximum value</returns>
     public static FibonacciSequence Fibonacci(long maximum)
         => new() { Maximum = maximum };
+
+    /// <summary>
+    /// Computes the Md5 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Md5(string @string)
+        => Hashing.Md5(@string);
+
+    /// <summary>
+    /// Computes the Sha1 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Sha1(string @string)
+        => Hashing.Sha1(@string);
+
+    /// <summary>
+    /// Computes the SHA2-256 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Sha256(string @string)
+        => Hashing.Sha256(@string);
+
+    /// <summary>
+    /// Computes the SHA2-384 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Sha384(string @string)
+        => Hashing.Sha384(@string);
+
+    /// <summary>
+    /// Computes the SHA2-512 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Sha512(string @string)
+        => Hashing.Sha512(@string);
+
+    /// <summary>
+    /// Computes the CRC32 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Crc32(string @string)
+        => Hashing.Crc32(@string);
+
+    /// <summary>
+    /// Computes the CRC64 hash of a given string
+    /// </summary>
+    /// <param name="string">The input string to hash</param>
+    /// <returns>The hash value</returns>
+    public static HashValue Crc64(string @string)
+        => Hashing.Crc64(@string);
 }
