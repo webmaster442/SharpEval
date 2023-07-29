@@ -150,14 +150,13 @@ public class TestEvaluator
     [Test]
     public async Task EnsureThat_Evaluator_Reset_ClearsState()
     {
-        int variableCount = 0;
         await _sut.EvaluateAsync("var foo = 42");
-        variableCount += 1;
+
+        Assert.That(_sut.Variables.Count, Is.EqualTo(1));
 
         _sut.Reset();
-        variableCount = _sut.Variables.Count;
 
-        Assert.That(variableCount, Is.EqualTo(0));
+        Assert.That(_sut.Variables.Count, Is.EqualTo(0));
     }
 
 }

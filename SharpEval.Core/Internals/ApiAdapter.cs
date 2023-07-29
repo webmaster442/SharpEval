@@ -24,7 +24,7 @@ internal class ApiAdapter
             throw new InvalidOperationException($"Unknown currency: {from} Valid currencies: {string.Join(',', exchangeTable.Keys)}");
 
         if (!exchangeTable.ContainsKey(to))
-            throw new InvalidOperationException($"Unknown currency: {from} Valid currencies: {string.Join(',', exchangeTable.Keys)}");
+            throw new InvalidOperationException($"Unknown currency: {to} Valid currencies: {string.Join(',', exchangeTable.Keys)}");
 
         return ammount / exchangeTable[from] * exchangeTable[to];
     }

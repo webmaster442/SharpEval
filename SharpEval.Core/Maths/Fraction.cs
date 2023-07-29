@@ -63,8 +63,7 @@ public struct Fraction :
 
     private void Simplify()
     {
-        if ((Numerator < 0 && Denominator < 0)
-            || Denominator < 0)
+        if (Denominator < 0)
         {
             Numerator = -Numerator;
             Denominator = -Denominator;

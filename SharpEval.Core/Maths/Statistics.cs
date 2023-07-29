@@ -48,6 +48,6 @@ internal static class Statistics
         {
             product *= items[i];
         }
-        return Math.Pow(Convert.ToDouble(product), 1 / items.Length);
+        return Math.Pow(Convert.ToDouble(product), 1.0 / items.Length);
     }
 }
