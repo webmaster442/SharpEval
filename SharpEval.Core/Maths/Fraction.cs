@@ -16,9 +16,13 @@ public struct Fraction :
     IMultiplyOperators<Fraction, Fraction, Fraction>,
     IModulusOperators<Fraction, Fraction, Fraction>,
     IComparisonOperators<Fraction, Fraction, bool>,
-    IEqualityOperators<Fraction, Fraction, bool>,
     IAdditiveIdentity<Fraction, Fraction>,
-    IMultiplicativeIdentity<Fraction, Fraction>
+    IMultiplicativeIdentity<Fraction, Fraction>,
+    IMinMaxValue<Fraction>,
+    IIncrementOperators<Fraction>,
+    IDecrementOperators<Fraction>,
+    IUnaryPlusOperators<Fraction, Fraction>,
+    IUnaryNegationOperators<Fraction, Fraction>
 {
 
     /// <summary>
@@ -36,6 +40,12 @@ public struct Fraction :
 
     /// <inheritdoc/>
     public static Fraction MultiplicativeIdentity => new(1, 1);
+
+    /// <inheritdoc/>
+    public static Fraction MaxValue => new(long.MaxValue, 1);
+
+    /// <inheritdoc/>
+    public static Fraction MinValue => new(long.MinValue, 1);
 
     /// <summary>
     /// Creates a new instance a fractional number
@@ -240,5 +250,29 @@ public struct Fraction :
     public static implicit operator Fraction(long number)
     {
         return new Fraction(number, 1);
+    }
+
+    /// <inheritdoc/>
+    public static Fraction operator ++(Fraction value)
+    {
+        return value + 1;
+    }
+
+    /// <inheritdoc/>
+    public static Fraction operator --(Fraction value)
+    {
+        return value - 1;
+    }
+
+    /// <inheritdoc/>
+    public static Fraction operator +(Fraction value)
+    {
+        return new Fraction(+value.Numerator, value.Denominator);
+    }
+
+    /// <inheritdoc/>
+    public static Fraction operator -(Fraction value)
+    {
+        return new Fraction(-value.Numerator, value.Denominator);
     }
 }
