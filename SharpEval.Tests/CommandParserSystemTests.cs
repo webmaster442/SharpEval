@@ -8,14 +8,14 @@ public class CommandParserSystemTests
 {
     private TestIO _testIO;
     private CommandParser _sut;
-    private Mock<IApiClient> _apiClientMock;
+    private IApiClient _apiClientMock;
 
     [SetUp]
     public void Setup()
     {
         _testIO = new TestIO();
-        _apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
-        _sut = new CommandParser(_testIO, _testIO, _apiClientMock.Object);
+        _apiClientMock = Substitute.For<IApiClient>();
+        _sut = new CommandParser(_testIO, _testIO, _apiClientMock);
     }
 
     [Test]

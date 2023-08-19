@@ -4,8 +4,8 @@
 public class TestEvaluator
 {
     private Evaluator _sut;
-    private Mock<ISettingsProvider> _settingProviderMock;
-    private Mock<IApiClient> _apiClientMock;
+    private ISettingsProvider _settingProviderMock;
+    private IApiClient _apiClientMock;
     private Settings _settings;
 
     [SetUp]
@@ -15,10 +15,10 @@ public class TestEvaluator
         {
             CurrentAngleSystem = AngleSystem.Deg,
         };
-        _settingProviderMock = new Mock<ISettingsProvider>(MockBehavior.Strict);
-        _apiClientMock = new Mock<IApiClient>(MockBehavior.Strict);
-        _settingProviderMock.Setup(x => x.GetSettings()).Returns(_settings);
-        _sut = new Evaluator(_settingProviderMock.Object, _apiClientMock.Object);
+        _settingProviderMock = Substitute.For<ISettingsProvider>();
+        _apiClientMock = Substitute.For<IApiClient>();
+        _settingProviderMock.GetSettings().Returns(_settings);
+        _sut = new Evaluator(_settingProviderMock, _apiClientMock);
         _sut.SetRandomSeed(4);
     }
 
@@ -103,7 +103,7 @@ public class TestEvaluator
     [TestCase("Date(1914, 1, 1, 11, 52)", "01/01/1914 11:52:00")]
     [TestCase("Date(1914, 1, 1, 11, 33, 22)", "01/01/1914 11:33:22")]
     [TestCase("Lcm(5, 2)", "10")]
-    [TestCase("GeometricMean(1, 2, 3)", "1")]
+    [TestCase("GeometricMean(1, 3, 9)", "3")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);

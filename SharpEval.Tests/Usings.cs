@@ -2,7 +2,7 @@ global using System.Globalization;
 global using System.Text;
 
 
-global using Moq;
+global using NSubstitute;
 
 global using NUnit.Framework;
 

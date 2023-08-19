@@ -4,14 +4,14 @@
 public class TestHtmlResultWriter
 {
     private HtmlResultWriter _sut;
-    private Mock<ISvgImage> _imageMock;
+    private ISvgImage _imageMock;
 
     [SetUp]
     public void Setup()
     {
         _sut = new HtmlResultWriter();
-        _imageMock = new Mock<ISvgImage>(MockBehavior.Strict);
-        _imageMock.SetupGet(x => x.Data).Returns("<svg></svg>");
+        _imageMock = Substitute.For<ISvgImage>();
+        _imageMock.Data.Returns("<svg></svg>");
     }
 
     [Test]
@@ -25,7 +25,7 @@ public class TestHtmlResultWriter
     [Test]
     public void ResultImage()
     {
-        _sut.Result(_imageMock.Object);
+        _sut.Result(_imageMock);
         string result = _sut.ToString();
         Assert.That(result, Is.EqualTo("<figure><svg></svg></figure>"));
     }
@@ -33,10 +33,10 @@ public class TestHtmlResultWriter
     [Test]
     public void ResultTable()
     {
-        Mock<ITableRow> row = new Mock<ITableRow>(MockBehavior.Strict);
-        row.SetupGet(x => x.ColumnCount).Returns(1);
-        row.SetupGet(x => x.Columns).Returns(new[] { "column" });
-        _sut.Result(new ITableRow[] { row.Object });
+        ITableRow row = Substitute.For<ITableRow>();
+        row.ColumnCount.Returns(1);
+        row.Columns.Returns(new[] { "column" });
+        _sut.Result(new ITableRow[] { row });
 
         string result = _sut.ToString();
         Assert.That(result, Is.EqualTo("<table>\r\n<tr>\r\n<td>column</td>\r\n</tr>\r\n</table>\r\n"));
