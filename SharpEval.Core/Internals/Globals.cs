@@ -1,8 +1,5 @@
 ﻿using System.Globalization;
-using System.IO.Hashing;
 using System.Numerics;
-using System.Security.Cryptography;
-using System.Text;
 
 using SharpEval.Core.Maths;
 using SharpEval.Core.Maths.Sequences;
@@ -332,6 +329,14 @@ public sealed class Globals
         => Convert.ToString(number, 8);
 
     /// <summary>
+    /// Converts a long value to its roman number representation
+    /// </summary>
+    /// <param name="number">the numnber to convert</param>
+    /// <returns>the value as a string represented as a roman number</returns>
+    public static string ToRoman(long number)
+        => RomanConversion.ConvertToRoman(number);
+
+    /// <summary>
     /// Convert a number from its binary representation to a long value
     /// </summary>
     /// <param name="number">The number represented in binary as a string</param>
@@ -354,6 +359,14 @@ public sealed class Globals
     /// <returns>The number converted to long</returns>
     public static long FromHex(string number)
         => Convert.ToInt64(number, 16);
+
+    /// <summary>
+    /// Convert a number from its roman number representation to an int value
+    /// </summary>
+    /// <param name="number">The number represented in roman as a string</param>
+    /// <returns>The number converted to an int</returns>
+    public static int FromRoman(string number)
+        => RomanConversion.ConvertFromRoman(number);
 
     /// <summary>
     /// Creates a complex number
@@ -592,12 +605,12 @@ public sealed class Globals
         => new Vector3(x, y, z);
 
     /// <summary>
-    /// 
+    /// Convert a Currency to an other currency
     /// </summary>
-    /// <param name="ammount"></param>
-    /// <param name="from"></param>
-    /// <param name="to"></param>
-    /// <returns></returns>
+    /// <param name="ammount">Ammount of currency to convert</param>
+    /// <param name="from">source currency</param>
+    /// <param name="to">target currency</param>
+    /// <returns>Currency converted to the tartget</returns>
     public double Exchange(double ammount, string from, string to)
         => _apiAdapter.GetExchange(ammount, from, to);
 

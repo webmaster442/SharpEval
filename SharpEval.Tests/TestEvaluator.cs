@@ -104,6 +104,8 @@ public class TestEvaluator
     [TestCase("Date(1914, 1, 1, 11, 33, 22)", "01/01/1914 11:33:22")]
     [TestCase("Lcm(5, 2)", "10")]
     [TestCase("GeometricMean(1, 3, 9)", "3")]
+    [TestCase("FromRoman(\"MMMDCCXXIV\")", "3724")]
+    [TestCase("ToRoman(3724)", "MMMDCCXXIV")]
     public async Task EnsureThat_Evaluator_EvaluateAsync_ReturnsExpected(string input, string expected)
     {
         var result = await _sut.EvaluateAsync(input);

@@ -20,6 +20,37 @@ internal static class RomanConversion
         { 1, "I" },
     };
 
+    private readonly static Dictionary<char, int> ReverseRomanLiterals = new()
+    {
+        { 'I', 1 },
+        { 'V', 5 },
+        { 'X', 10 },
+        { 'L', 50 },
+        { 'C', 100 },
+        { 'D', 500 },
+        { 'M', 1000 },
+    };
+
+    public static int ConvertFromRoman(string roman)
+    {
+        if (string.IsNullOrEmpty(roman))
+            return 0;
+
+        int result = ReverseRomanLiterals[roman[^1]];
+
+        for (int i=roman.Length -2; i>=0; i--)
+        {
+            if (i == 0 && roman[i] ==  '-')
+                result *= -1;
+            else if (ReverseRomanLiterals[roman[i]] >= ReverseRomanLiterals[roman[i + 1]])
+                result += ReverseRomanLiterals[roman[i]];
+            else
+                result -= ReverseRomanLiterals[roman[i]];
+        }
+
+        return result;
+    }
+
     public static string ConvertToRoman(long num)
     {
         if (num > 4999 || num < -4999)
